@@ -128,6 +128,27 @@ export default new Router({
       component: () => import('./views/org/groupEdit.vue')
     },
 
+
+    // EMPLOYEE
+    {
+      path: '/organization/employee',
+      name: 'employee',
+      beforeEnter: guard,
+      component: () => import('./views/org/employee.vue')
+    },
+    {
+      path: '/organization/employee/create',
+      name: 'employee Add ',
+      beforeEnter: guard,
+      component: () => import('./views/org/employeeAdd.vue')
+    },
+    {
+      path: '/organization/employee/edit/:id',
+      name: 'employee edit detail',
+      beforeEnter: guard,
+      component: () => import('./views/org/employeeEdit.vue')
+    },
+
     
     
   ]

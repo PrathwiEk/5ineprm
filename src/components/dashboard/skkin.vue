@@ -36,7 +36,7 @@
         <li><a href="/organization/department">Department</a></li>
         <li><a href="/organization/designation">Designation</a></li>
         <li><a href="/organization/group">Group</a></li>
-        <li><a href="#!">Employee</a></li>
+        <li><a href="/organization/employee">Employee</a></li>
     </ul>
         
   </div>
