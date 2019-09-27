@@ -30,7 +30,7 @@ body, html{ background: #f3f3f3; }
 .mr10{margin-right:10px}
 .mb10{margin-bottom: 10px !important}
 /* form box */
-.fb-title { padding: 25px 0; position: relative; margin-bottom: 30px;}
+.fb-title { padding: 25px 0; position: relative; }
 .fb-title span{font-size: 1.286rem;font-weight: 700; color:#333}
 .fb-title:after, .fb-title:before{position:absolute;width: 100%; height: 1px;left: 0; background: #cacaca;content: ""}
 .fb-title:after{bottom:15px}
@@ -53,4 +53,7 @@ body, html{ background: #f3f3f3; }
 .card.material-table table{margin-bottom: 56px;}
 .card.material-table table th { font-size: 14px; font-weight: 600;}
 .card.material-table table thead{background: #fcfcfc;}
+.line-slect .multiselect__tags { min-height: 40px; display: block; padding: 8px 40px 0 8px; border-radius: 0; border: none; background: transparent; font-size: 14px; border-bottom: 1px solid #9e9e9e; margin-top: 8px; }
+
+
 </style>
