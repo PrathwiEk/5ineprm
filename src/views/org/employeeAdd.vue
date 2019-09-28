@@ -8,7 +8,7 @@
       <div class="container-wrap-1">
         <form @submit.prevent="adddesignation()">
           <div class="row m0">
-        <!-- ---------------------------------------------------- -->
+        <!-- ---------------------- basic---------------------------- -->
         
             <div class="fb-title">
                 <span>Basic info</span>
@@ -20,7 +20,7 @@
                     <div class="title">First Name</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.title" class="no-line" />
+                    <input type="text" required v-model="basic.fname" class="no-line" />
                   </div>
                 </div>
 
@@ -29,7 +29,7 @@
                     <div class="title">Mail Id </div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="email" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="email" required v-model="basic.mail" class="no-line" />
                   </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <div class="title">Last Name</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.title" class="no-line" />
+                    <input type="text" required v-model="basic.lname" class="no-line" />
                   </div>
                 </div>
                 <div class="row m0">
@@ -48,24 +48,25 @@
                     <div class="title">Phone Number</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="email" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="text" required v-model="basic.phone" class="no-line" />
                   </div>
                 </div>
             </div>
 
             <div class="clearfix"></div>
-        <!-- ---------------------------------------------------- -->
+        <!-- ---------------------- work ---------------------------- -->
             <div class="fb-title">
                 <span>Work info</span>
             </div>
-
+ 
             <div class="col s12 l6 m12">
                 <div class="row m0">
                   <div class="col s12 m3">
                     <div class="title">Department</div>
                   </div>
                   <div class="col s12 m7 ">
-                     <Multiselect class="line-slect"  required v-model="department" track-by="name" label="name"  :options="departments"></Multiselect>
+
+                     <Multiselect class="line-slect" placeholder="Select Department"  required v-model="work.department" track-by="name" label="name"  :options="departments"></Multiselect>
                   </div>
                 </div>
 
@@ -74,7 +75,7 @@
                     <div class="title">Group</div>
                   </div>
                   <div class="col s12 m7">
-                    <Multiselect class="line-slect"  required v-model="department" track-by="name" label="name"  :options="departments"></Multiselect>
+                    <Multiselect class="line-slect" placeholder="Select Group" required v-model="work.group" track-by="name" label="name"  :options="groups"></Multiselect>
                   </div>
                 </div>
 
@@ -83,11 +84,9 @@
                     <div class="title">Date of Join</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line datepicker" />
+                    <input type="text" required v-model="work.doj" class="no-line datepicker" />
                   </div>
                 </div>
-
-
             </div>
 
             <div class="col s12 l6 m12">
@@ -96,7 +95,7 @@
                     <div class="title">Designation</div>
                   </div>
                   <div class="col s12 m7">
-                    <Multiselect class="line-slect"  required v-model="department" track-by="name" label="name"  :options="departments"></Multiselect>
+                    <Multiselect class="line-slect" placeholder="Select Designation"  required v-model="work.designation" track-by="name" label="name"  :options="designations"></Multiselect>
                   </div>
                 </div>
 
@@ -105,13 +104,13 @@
                     <div class="title">Date of hire</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line datepicker" />
+                    <input type="text" required v-model="work.doh"  class="no-line datepicker" />
                   </div>
                 </div>
             </div>
 
             <div class="clearfix"></div>
-        <!-- ---------------------------------------------------- -->
+        <!-- ---------------------- Personal ------------------------ -->
             <div class="fb-title">
                 <span>Personal info</span>
             </div>
@@ -122,30 +121,25 @@
                     <div class="title">Gender</div>
                   </div>
                   <div class="col s12 m7 ">
-                     <Multiselect class="line-slect"  required v-model="department" track-by="name" label="name"  :options="departments"></Multiselect>
+                     <Multiselect class="line-slect" placeholder="Select Gender"  required v-model="personal.gender" track-by="name" label="name"  :options="genders"></Multiselect>
                   </div>
                 </div>
-
-
                 <div class="row m0">
                   <div class="col s12 m3">
                     <div class="title">Date of Birth</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line datepicker" />
+                    <input type="text" required v-model="personal.dob" class="no-line datepicker" />
                   </div>
                 </div>
-
                 <div class="row m0">
                   <div class="col s12 m3">
                     <div class="title">Address</div>
                   </div>
                   <div class="col s12 m7">
-                    <textarea id="textarea1" class="materialize-textarea"> </textarea>
+                    <textarea id="textarea1" v-model="personal.address" class="materialize-textarea"> </textarea>
                   </div>
                 </div>
-
-
             </div>
 
             <div class="col s12 l6 m12">
@@ -154,7 +148,7 @@
                     <div class="title">Personal Phone</div>
                   </div>
                   <div class="col s12 m7">
-                     <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                     <input type="text" required v-model="personal.phone" class="no-line" />
                   </div>
                 </div>
 
@@ -163,13 +157,13 @@
                     <div class="title">Personal Email Id</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="email" required v-model="personal.mail" class="no-line" />
                   </div>
                 </div>
             </div>
 
             <div class="clearfix"></div>
-        <!-- ---------------------------------------------------- -->
+        <!-- ---------------------- Account ------------------------- -->
 
              <div class="fb-title">
                 <span>Account info</span>
@@ -182,7 +176,7 @@
                     <div class="title">Bank name</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="text" required v-model="account.bname" class="no-line" />
                   </div>
                 </div>
 
@@ -191,7 +185,7 @@
                     <div class="title">Account Number</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="text" required v-model="account.bno" class="no-line" />
                   </div>
                 </div>
 
@@ -200,7 +194,7 @@
                     <div class="title">IFSC</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                    <input type="text" required v-model="account.ifsc" class="no-line" />
                   </div>
                 </div>
 
@@ -212,7 +206,7 @@
                     <div class="title">Pan Card Number</div>
                   </div>
                   <div class="col s12 m7 ">
-                      <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                      <input type="text" required v-model="account.pan" class="no-line" />
                   </div>
                 </div>
 
@@ -221,7 +215,7 @@
                     <div class="title">Adhaar Number</div>
                   </div>
                   <div class="col s12 m7">
-                     <input type="text" required v-model="designation.mailAlias" class="no-line" />
+                     <input type="text" required v-model="account.adhaar" class="no-line" />
                   </div>
                 </div>
 
@@ -256,17 +250,18 @@ export default {
   components: { secondnav, nvbars, Multiselect},
   data() {
     return {
-        designation: {
-            title: "",
-            mailAlias: "",
-        },
-        navitems: {
-                title: "Add New Employee"
-        },
-        departments:[
-            {name:'DM'},
-            {name:'DVEP'},
-        ],
+        designation: { title: "", mailAlias: "", },
+        date:'',
+        basic:{ fname: '', mail: '', lname: '', phone: '', },
+        work:{department:'', designation:'', group:'', doh:'', doj:''},
+        personal:{ gender:'', dob:'', address:'', phone:'', mail:'' },
+        account:{bname:'', bno:'', ifsc:'', pan:'', adhaar:''},
+
+        navitems: { title: "Add New Employee" },
+        departments:'',
+        groups:[],
+        designations:[],
+        genders:[{ name: 'Male', value:'M' }, { name: 'Female', value:'F' },{ name: 'Others', value:'O' }, ],
     };
   },
   mounted() {
@@ -274,29 +269,78 @@ export default {
     M.FormSelect.init(elems);
 
     var datepicker = document.querySelectorAll('.datepicker');
-    M.Datepicker.init(datepicker);
+    var picdate = M.Datepicker.init(datepicker);
+
+    this.getdgdlist();
+    
   },
   methods: {
+    // fetch designation, department, group
+    getdgdlist(){
+      var self = this;
+      this.$axios.get(this.$apiUrl + "org/list-all", {
+          headers: { Authorization: this.$token }
+        })
+      .then(function (response) {
+        
+        self.departments = response.data.data.department;
+        self.groups = response.data.data.group;
+        self.designations = response.data.data.designation;
+      })
+      // .catch(function (error) {
+      //     var toastHTML = "<span>Some error will occured. <br> Please contact Support Team!!!</span>";
+      //     M.toast({ html: toastHTML, classes: "red" });
+      // })
+    },
+
     adddesignation() {
       const formData = new FormData();
-      formData.append("title", this.designation.title);
-      formData.append("mail", this.designation.mailAlias);
+      formData.append("name", this.basic.fname);
+      formData.append("lname", this.basic.lname);
+      formData.append("email", this.basic.mail);
+      formData.append("phone", this.basic.phone);
+
+      formData.append("designation", this.work.designation.id);
+      formData.append("department", this.work.department.id);
+      formData.append("group", this.work.group.id);
+      formData.append("doh", '03-4-2019');
+      formData.append("doj", '03-4-2019');
+
+      formData.append("gender", this.personal.gender.value);
+      formData.append("dob", '03-4-2019');
+      formData.append("ad_phone", this.personal.phone);
+      formData.append("address", this.personal.address);
+      formData.append("ad_email", this.personal.mail);
+
+      formData.append("pan", this.account.pan);
+      formData.append("bacc_no", this.account.bno);
+      formData.append("bname", this.account.bname);
+      formData.append("bifsc", this.account.ifsc);
+      formData.append("adhar", this.account.adhaar);
+     
       
       this.$axios
-        .post(this.$apiUrl + "org/designation-add", formData, {
+        .post(this.$apiUrl + "org/employee-add", formData, {
           headers: { Authorization: this.$token }
         })
         .then(res => {
+          this.errormsg = err.response.data.msg;
+          var toastHTML = "<span>Employee Successfully Added. <br>Employee login link sended to employee email id.</span>";
+          M.toast({ html: toastHTML, classes: "red" });
           this.$router.push({
-            path: "/organization/designation/edit/" + res.data.data.id
+            path: "/organization/employee/edit/" + res.data.data.id
           });
         })
         .catch(err => {
-          console.log(err);
           this.errormsg = err.response.data.msg;
           var toastHTML = "<ul>" + err.response.data.msg + "</ul>";
           M.toast({ html: toastHTML, classes: "red" });
         });
+    },
+
+    // date fetch
+    updateText(e){
+      alert(e)
     }
   }
 };
