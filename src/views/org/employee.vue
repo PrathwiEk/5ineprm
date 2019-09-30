@@ -3,7 +3,7 @@
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
     <secondnav></secondnav>
-      <datatable title="Departments" :columns="tableColumns1" :rows="departmentList" v-on:row-click="editDepartment"></datatable>
+      <datatable title="Departments" :columns="tableColumns1" :rows="list" v-on:row-click="editDepartment"></datatable>
   </div>
 </template>
 
@@ -22,31 +22,33 @@ export default {
       },
 
       tableColumns1: [
-        { label: "Department Name", field: "des_title", numeric: false, html: false },
-        { label: "Mail Alias", field: "des_mail", numeric: false, html: false },
-        { label: "Created by", field: "des_created_by", numeric: false, html: false }, 
-        { label: "Created On", field: "des_created_On",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'},
-        { label: "Modified By", field: "des_update_by", numeric: false, html: false }, 
-        { label: "Modified At", field: "des_updated_on",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'}
+        { label: "Reg Id", field: "id", numeric: false, html: false },
+        { label: "First Name", field: "fname", numeric: false, html: false },
+        { label: "Last Name", field: "lname", numeric: false, html: false },
+        { label: "Email", field: "email", numeric: false, html: false }, 
+        { label: "Phone", field: "phone",  html: false },
+        { label: "Department", field: "profile.department", numeric: false, html: false }, 
+        { label: "Designation", field: "profile.designation",  html: false },
+        { label: "DOB", field: "profile.dob",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'},
+        { label: "DOJ", field: "profile.doj",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'},
+        
+        
       ],
-      departmentList:[],
+      list:[],
     }
   },
 
   mounted(){
-      computed:{
-this.getDepartment()
-      }
-        
+    this.getDepartment()
   },
   methods:{
     //   get department list
         getDepartment(){
-            this.$axios.get(this.$apiUrl+'org/designation',
+            this.$axios.get(this.$apiUrl+'org/employee',
                 {headers: { Authorization: this.$token } }
             )
             .then(res => {
-                this.departmentList = res.data.data;
+                this.list = res.data.data;
             })
             .catch(err =>{
                 console.log(err);
@@ -58,7 +60,7 @@ this.getDepartment()
 
     // single department
         editDepartment(row){
-            this.$router.push({ path:'/organization/designation/edit/'+ row.id});
+            this.$router.push({ path:'/organization/employee/edit/'+ row.id});
         }
   }
 };
