@@ -7,21 +7,13 @@
             <li>Department</li>
           </ul>
           <ul id="nav-mobile" class="right">
-            <li>
-              <router-link
-                to="/organization/department/create"
-                class="waves-effect waves-green"
-              >
-                <i class="material-icons">add</i>
-                <span>Create</span>
-              </router-link>
+            <li v-for="(item , key) in secnav" :key="key"> 
+              <router-link :to="item.link" class="waves-effect waves-green" > 
+                <i class="material-icons">{{item.icon}}</i> 
+                <span>{{item.title}}</span> 
+              </router-link> 
             </li>
-            <li>
-              <router-link to="/organization/department" class="waves-effect waves-green">
-                <i class="material-icons">list</i>
-                <span>list</span>
-              </router-link>
-            </li>
+            
             <!-- <li>
               <a class="dropdown-trigger" href="#" data-target="dropdown1">
                 <i class="material-icons">filter_list</i>
@@ -37,5 +29,7 @@
 
 <script>
 export default {
+props: ['secnav'],
+
 }
 </script>

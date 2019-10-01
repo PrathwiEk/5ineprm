@@ -34,12 +34,7 @@
                                 </div>
                             </div>
                             <div class="col s12 m7">
-                                <select v-model="department.leader" >
-                                    <option value=""  >Choose your option</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </select>
+                                <Multiselect class="line-slect" placeholder="Select Department Leader"  required v-model="department.leader" track-by="name" label="name" :custom-label="fullName"  :options="emps"></Multiselect>
                             </div>
                         </div>
 
@@ -50,12 +45,7 @@
                                 </div>
                             </div>
                             <div class="col s12 m7">
-                                <select v-model="department.parent" >
-                                    <option value=""  >Choose your option</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                </select>
+                               <Multiselect class="line-slect" placeholder="Select Parent Department"  required v-model="department.parent" track-by="dep_title" label="dep_title"   :options="departments"></Multiselect>
                             </div>
                         </div>
 
@@ -79,33 +69,38 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
 export default {
+    components:{Multiselect},
     data(){
        return{
            department:{
                 title: '', mailAlias: '', leader: '', parent: ''
-           }
+           },
+           emps:[],
+           departments:[],
             
        } 
     },
     mounted(){
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
+        this.getEmployee();
+        this.getDepartment();
     },
     methods:{
         addDepartment(){
             const formData = new FormData();
             formData.append('title', this.department.title);
             formData.append('mail', this.department.mailAlias);
-            formData.append('leader', this.department.leader);
-            formData.append('parent', this.department.parent);
+            formData.append('leader', this.department.leader.uqid);
+            formData.append('parent', this.department.parent.id);
             this.$axios.post(this.$apiUrl+'org/department-add',
                 formData,
                 {headers: { Authorization: this.$token } }
             )
             .then(res => {
-                
-                    this.$router.push({ path:'/organization/department/edit?id='+ res.data.id.id});
+                var toastHTML = '<span>Department Created Successfully</span>';
+                M.toast({html: toastHTML, classes: 'green'});
+                this.$router.push({ path:'/organization/department/edit?id='+ res.data.id.id});
             })
             .catch(err =>{
                 console.log(err);
@@ -113,6 +108,29 @@ export default {
                 var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
                 M.toast({html: toastHTML, classes: 'red'});
             })
+        },
+
+        getEmployee(){
+             this.$axios.get(this.$apiUrl+'org/employee-list',  {headers: { Authorization: this.$token } })
+            .then(res => {
+                this.emps = res.data.data;
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+        getDepartment(){
+             this.$axios.get(this.$apiUrl+'org/department',  {headers: { Authorization: this.$token } })
+            .then(res => {
+                this.departments = res.data.data;
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+
+        fullName({name, last_name}){
+            return `${name} ${ last_name}`;
         }
     }
 

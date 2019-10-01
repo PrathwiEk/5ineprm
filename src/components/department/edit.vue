@@ -27,35 +27,25 @@
                         </div>
 
                         <div class="row  ">
-                                <div class="col s12 m3">
-                                    <div class="title">
-                                        <span>Department Lead</span>
-                                    </div>
+                            <div class="col s12 m3">
+                                <div class="title">
+                                    <span>Department Lead</span>
                                 </div>
-                                <div class="col s12 m7">
-                                    <select  v-model="department.dep_leader" >
-                                        <option value=""  >Choose your option</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="col s12 m7">
+                                <Multiselect class="line-slect" placeholder="Select Department Leader"  required v-model="department.dep_leader" track-by="name" label="name" :custom-label="fullName"  :options="emps"></Multiselect>
+                            </div>
                         </div>
 
                         <div class="row  ">
-                                <div class="col s12 m3">
-                                    <div class="title">
-                                        <span>Parent Department</span>
-                                    </div>
+                            <div class="col s12 m3">
+                                <div class="title">
+                                    <span>Parent Department</span>
                                 </div>
-                                <div class="col s12 m7">
-                                    <select  v-model="department.dep_parent">
-                                        <option value=""  >Choose your option</option>
-                                        <option value="1">Option</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="col s12 m7">
+                                <Multiselect class="line-slect" placeholder="Select Parent Department"  required v-model="selectedDepartment" track-by="dep_title" label="dep_title"   :options="departments"></Multiselect>
+                            </div>
                         </div>
                     </div>  
                     <div class="col s12 l6 m12">
@@ -103,7 +93,6 @@
                                 </div>
                             </div>
                     </div>  
-                    
                     <div class="bottom-button">
                         <div class="col s12  ">
                             <button class="waves-effect waves-light btn-small mr10 hoverable"  ref="submit">update</button>
@@ -112,44 +101,46 @@
                     </div>
                 </form>
             </div>
-
-
         </div>
                   
     </div>
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
 export default {
+    components:{Multiselect},
     data(){
        return{
-           department:[],
-           parent:''
-            
+            department:[],
+            emps:[],
+            departments:[],
+            selectedDepartment:'',
+            slectedEmp: [],
        } 
     },
     mounted(){
       
         this.getdepartment();
-        this.preloaditem();
+        this.getEmployee();
+        this.getDepartments();
+        
     },
     methods:{
-        preloaditem(){
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
-        },
+        
         addDepartment(){
             const formData = new FormData();
             formData.append('title', this.department.dep_title);
             formData.append('mail', this.department.dep_mail);
-            formData.append('leader', this.department.dep_leader);
-            formData.append('parent', this.department.dep_parent);
+            formData.append('leader', this.department.dep_leader.uqid);
+            formData.append('parent', this.selectedDepartment.id);
             this.$axios.post(this.$apiUrl+'org/department-update/'+this.$route.query.id,
                 formData,
                 {headers: { Authorization: this.$token } }
             )
             .then(res => {
-                    this.department = res.data.data
+                    var toastHTML = '<span>Succefully updated</span>';
+                    M.toast({html: toastHTML, classes: 'green'});
                     this.$router.push({ path:'/organization/department/edit?id='+ res.data.id.id});
             })
             .catch(err =>{
@@ -177,6 +168,44 @@ export default {
                 M.toast({html: toastHTML, classes: 'red'});
                 this.$router.push({ path:'/organization/department'});
             })
+        },
+
+        // Get Employee
+        getEmployee(){
+             this.$axios.get(this.$apiUrl+'org/employee-list',  {headers: { Authorization: this.$token } })
+            .then(res => {
+                this.emps = res.data.data;
+                this.emps.forEach(element => {
+                    if(element.uqid == this.department.dep_leader){
+                        this.department.dep_leader = element;
+                    }
+                });
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+// 
+        // Get departments
+        getDepartments(){
+             this.$axios.get(this.$apiUrl+'org/department',  {headers: { Authorization: this.$token } })
+            .then(res => {
+                
+                var self = this;
+                this.departments = res.data.data;
+                this.departments.forEach(element => {
+                    if(element.id == this.department.dep_parent){
+                        this.selectedDepartment = {dep_parent: element.id, dep_title: element.dep_title }
+                    }
+                });
+                
+            })
+            .catch(err => {
+                console.error(err); 
+            })
+        },
+        fullName({name, last_name}){
+            return `${name} ${ last_name}`;
         }
     }
 
