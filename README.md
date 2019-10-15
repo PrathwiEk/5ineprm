@@ -1,5 +1,5 @@
 # project-management
-## documentation
+
 
 ## import date picker
 
@@ -70,15 +70,15 @@ npm install vue-multiselect --save
 doc (https://vue-multiselect.js.org/)
 
 ## Secont nav dynamic
-#props:
+props:
 navitems
 
-#component includ
+component includ
 ```
 import skin from '../../components/dashboard/skkin.vue';
 ```
 
-#arry items
+arry items
 ```
 navitems: { 
   title : 'Projects', 
@@ -107,4 +107,7 @@ import DataTable from "vue-materialize-datatable";
 }
 
 ```
+
+### Vue modal 
+see [Model Documentation](https://github.com/euvl/vue-js-modal)
 
