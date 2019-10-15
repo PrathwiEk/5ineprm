@@ -1,42 +1,14 @@
 # project-management
+## documentation
 
-## Project setup
-```
-npm install
-```
+## import date picker
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Date Picker
-# documentation
+### links
 ```
 https://github.com/charliekassel/vuejs-datepicker#readme
 import Datepicker from 'vuejs-datepicker';
 ```
-#import date picker
+### import datepicker
 ```
 import datepicker from 'vue-date-picker'
 
@@ -102,10 +74,19 @@ doc (https://vue-multiselect.js.org/)
 navitems
 
 #component includ
-```import skin from '../../components/dashboard/skkin.vue';```
+```
+import skin from '../../components/dashboard/skkin.vue';
+```
 
 #arry items
-```navitems: { title : 'Projects', lt_link: [ { path : '/test', icon : 'donut_small', title : 'add New', }, ], rt_link{/* Right links */} } ```
+```
+navitems: { 
+  title : 'Projects', 
+  lt_link: [ 
+    { path : '/test', icon : 'donut_small', title : 'add New', }, 
+  ], 
+  rt_link{/* Right links */} } 
+```
 
 ### data table
 ``` 
@@ -125,4 +106,5 @@ import DataTable from "vue-materialize-datatable";
     }
 }
 
-```# PRM_VUE
+```
+
