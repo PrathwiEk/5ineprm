@@ -160,7 +160,7 @@ export default {
 mounted(){
         // date picker
         var elems = document.querySelectorAll('.datepicker');
-        var instances = M.Datepicker.init(elems);
+        M.Datepicker.init(elems);
     },
   methods: {
     addTag(name) {
@@ -173,7 +173,7 @@ mounted(){
     
 
     AddUserList(){
-        self = this;
+        var self = this;
         this.project.pusers = [];
         const usrlist =  this.project.pusers;
         self.user.forEach(function(item){

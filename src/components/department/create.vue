@@ -100,7 +100,7 @@ export default {
             .then(res => {
                 var toastHTML = '<span>Department Created Successfully</span>';
                 M.toast({html: toastHTML, classes: 'green'});
-                this.$router.push({ path:'/organization/department/edit?id='+ res.data.id.id});
+                this.$router.push({ path:'/organization/department/edit/'+ res.data.id.id});
             })
             .catch(err =>{
                 console.log(err);

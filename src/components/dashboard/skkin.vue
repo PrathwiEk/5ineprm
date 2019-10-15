@@ -48,7 +48,7 @@ export default {
 
     mounted(){
         var elems = document.querySelectorAll('.dropdown-trigger');
-        var instances = M.Dropdown.init(elems, {constrainWidth:false, hover: true});
+        M.Dropdown.init(elems, {constrainWidth:false, hover: true});
     }
 };
 </script>

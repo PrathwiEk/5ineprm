@@ -141,7 +141,7 @@ export default {
             .then(res => {
                     var toastHTML = '<span>Succefully updated</span>';
                     M.toast({html: toastHTML, classes: 'green'});
-                    this.$router.push({ path:'/organization/department/edit?id='+ res.data.id.id});
+                    this.$router.push({ path:'/organization/department/edit/'+ res.data.id.id});
             })
             .catch(err =>{
                 console.log(err);
@@ -154,7 +154,7 @@ export default {
 
         // get single depatment
         getdepartment(){
-            var id = this.$route.query.id;
+            var id =  this.$route.params.id;
 
             this.$axios.get(this.$apiUrl+'org/department/'+id,
                 {headers: { Authorization: this.$token } }
@@ -191,7 +191,6 @@ export default {
              this.$axios.get(this.$apiUrl+'org/department',  {headers: { Authorization: this.$token } })
             .then(res => {
                 
-                var self = this;
                 this.departments = res.data.data;
                 this.departments.forEach(element => {
                     if(element.id == this.department.dep_parent){

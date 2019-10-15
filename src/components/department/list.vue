@@ -24,7 +24,7 @@ export default {
   },
 
   mounted(){
-      computed:{
+      {
 this.getDepartment()
       }
         
@@ -48,12 +48,9 @@ this.getDepartment()
 
     // single department
         editDepartment(row){
-            this.$router.push({ path:'/organization/department/edit?id='+ row.id+'&page=edit'});
+            this.$router.push({ path:'/organization/department/edit/'+ row.id});
         }
   }
 };
 </script>
 
-<style lang="sass" scoped>
-
-</style>

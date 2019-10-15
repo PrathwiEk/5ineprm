@@ -93,12 +93,14 @@ export default {
                 .then(res => {
                         if(res.data.status == 'true'){
                             var toastHTML =  res.data.msg;
+                            var M;
                             M.toast({html: toastHTML, classes: 'green', displayLength: 10000});
                         }
                     })
                 .catch(error => {
                     if (error.response) {
                         // console.log(error.response.data);
+                        var M;
                         var toastHTML = '<ul>' + error.response.data.error+ '</ul>';
                         M.toast({html: toastHTML, classes: 'red'});
         

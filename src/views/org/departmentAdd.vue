@@ -16,13 +16,11 @@
 
 <script>
 import skin from "../../components/dashboard/skkin.vue";
-import list from "../../components/department/list.vue";
 import create from "../../components/department/create.vue";
 import nav from "../../components/department/secnav.vue";
-import editing from "../../components/department/edit.vue";
 
 export default {
-  components: { nvbars: skin , list: list, create: create, secondnav: nav, editing:editing },
+  components: { nvbars: skin ,  create: create, secondnav: nav, },
     data() {
         return {
             navitems: {

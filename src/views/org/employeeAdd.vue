@@ -269,7 +269,7 @@ export default {
     M.FormSelect.init(elems);
 
     var datepicker = document.querySelectorAll('.datepicker');
-    var picdate = M.Datepicker.init(datepicker);
+    M.Datepicker.init(datepicker);
 
     this.getdgdlist();
     
@@ -324,7 +324,7 @@ export default {
           headers: { Authorization: this.$token }
         })
         .then(res => {
-          this.errormsg = err.response.data.msg;
+          this.errormsg = res.response.data.msg;
           var toastHTML = "<span>Employee Successfully Added. <br>Employee login link sended to employee email id.</span>";
           M.toast({ html: toastHTML, classes: "red" });
           this.$router.push({

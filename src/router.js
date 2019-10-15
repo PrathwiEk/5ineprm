@@ -81,7 +81,7 @@ export default new Router({
     },
 
     {
-      path: '/organization/department/edit',
+      path: '/organization/department/edit/:id',
       name: 'department edit',
       beforeEnter: guard,
       component: () => import('./views/org/departmentEdit.vue')
@@ -156,6 +156,7 @@ export default new Router({
 
 
 function guard(to, from, next){
+  
   if(store.state.user !=""){
     var t = JSON.parse(store.state.user);
   }else{

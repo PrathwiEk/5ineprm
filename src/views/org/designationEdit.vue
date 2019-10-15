@@ -120,7 +120,7 @@ export default {
     methods:{
         preloaditem(){
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
+           M.FormSelect.init(elems);
         },
         adddesignation(){
             const formData = new FormData();

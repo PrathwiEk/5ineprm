@@ -270,7 +270,7 @@ export default {
     M.FormSelect.init(elems);
 
     var datepicker = document.querySelectorAll('.datepicker');
-    var picdate = M.Datepicker.init(datepicker);
+    M.Datepicker.init(datepicker);
 
     this.getdgdlist();
     this.getEmployee();

@@ -135,6 +135,7 @@ export default {
         .then(res => {
           var toastHTML = "Succefully group updated";
           M.toast({ html: toastHTML, classes: "green" });
+          var t = res
         })
         .catch(err => {
           console.log(err);
