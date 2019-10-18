@@ -2,7 +2,7 @@
   <div>
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
 
     <div class="depart-create db-container">
       <div class="container-wrap-1">
@@ -37,11 +37,8 @@
 
               <div class="bottom-button">
                 <div class="col s12">
-                  <button
-                    class="waves-effect waves-light btn-small mr10 hoverable"
-                    ref="submit"
-                  >Submit</button>
-                  <button class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</button>
+                  <button class="waves-effect waves-light btn-small mr10 hoverable" ref="submit" >Submit</button>
+                  <router-link to="/organization/designation" class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</router-link>
                 </div>
               </div>
             </form>
@@ -64,9 +61,17 @@ export default {
         title: "",
         mailAlias: "",
       },
-       navitems: {
+      navitems: {
                 title: "Designation"
-        },
+      },
+      secnav:[
+        {
+          links:[
+            {icon: 'list', title: 'list', link: '/organization/designation'},
+            {icon: 'add', title: 'Create', link: '/organization/designation/create'},
+          ],
+        }
+      ],
     };
   },
   mounted() {

@@ -2,7 +2,7 @@
   <div id="dpt" >
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
      <div class="depart-create detail">
         <div class="container-wrap-1">
             <div class="row m0">
@@ -80,7 +80,7 @@
                     <div class="bottom-button">
                         <div class="col s12  ">
                             <button class="waves-effect waves-light btn-small mr10 hoverable"  ref="submit">update</button>
-                            <button class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</button>
+                            <router-link to="/organization/designation" class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</router-link>
                         </div>
                     </div>
                 </form>
@@ -107,6 +107,18 @@ export default {
             navitems: {
                 title: "Designation"
             },
+            secnav:[
+              {
+                links:[
+                  {icon: 'list', title: 'list', link: '/organization/designation'},
+                  {icon: 'add', title: 'Create', link: '/organization/designation/create'},
+                ],
+                method:[
+                  {icon: 'delete', title: 'delete', methods: 'delete', link:'org/designation-delete/'},
+                  
+                ],
+              }
+            ],
        }
        
     },
@@ -114,7 +126,7 @@ export default {
       
         this.getdesignation();
         this.preloaditem();
-        console.log(this.$route.params.id);
+        
         
     },
     methods:{
@@ -131,11 +143,12 @@ export default {
                 {headers: { Authorization: this.$token } }
             )
             .then(res => {
-                    this.designation = res.data.data
-                    this.$router.push({ path:'/organization/designation/edit?id='+ res.data.id.id});
+                    // this.designation = res.data.data
+                var toastHTML = '<ul>' + res.data.msg+ '</ul>';
+                M.toast({html: toastHTML, classes: 'green'});
             })
             .catch(err =>{
-                console.log(err);
+               
                 this.errormsg = err.response.data.msg;
                 var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
                 M.toast({html: toastHTML, classes: 'red'});

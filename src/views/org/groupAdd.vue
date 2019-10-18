@@ -2,7 +2,7 @@
   <div>
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
 
     <div class="depart-create db-container">
       <div class="container-wrap-1">
@@ -52,7 +52,7 @@
                   </div>
                   <div class="row m0 usersection" v-for="input in inputs" :key="input.id">
                     <div class="col s12 m6">
-                      <Multiselect :for="input.id" required v-model="input.name" track-by="name" label="name"  :options="users"></Multiselect>
+                      <Multiselect :for="input.id" required v-model="input.name" track-by="name" label="name" :custom-label="fullName" :options="users"></Multiselect>
                     </div>
                     <div class="col s10 m5">
                       <Multiselect :id="input.id" required v-model="input.role" track-by="name" label="name"  :options="roles"></Multiselect>
@@ -61,8 +61,11 @@
                   </div>
 
                     <div class="row m0 pt10">
-                        <a href="#!" @click="addUsercolumn" class="waves-effect waves-lightern  btn-flat blue-grey lighten-5"> <i class="material-icons left tiny">add</i> Add New User</a>
+                        <a href="#!" @click="addUsercolumn" class="waves-effect waves-lightern  btn-flat blue-grey lighten-5"> 
+                          <i class="material-icons left tiny">add</i> Add New User
+                        </a>
                     </div>
+                   
               </div>
 
 
@@ -95,9 +98,16 @@ export default {
        navitems: {
                 title: "Add Group"
         },
+        secnav:[
+        {
+          links:[
+            {icon: 'list', title: 'list', link: '/organization/group'},
+            {icon: 'add', title: 'Create', link: '/organization/group/create'},
+          ],
+        }
+      ],
         role:'',
-        user: [{ name: 'ghng', }, { name: 'ghng', }, { name: 'ghng', } ],
-        users:[ { name: 'shahir'}, {name: 'pratwhi'}, {name: 'rishabh' } ],
+        users:[],
         roles:[{ name:'admin'}, {name:'user' }],
         counter:0,
         inputs: [
@@ -108,6 +118,7 @@ export default {
   mounted() {
     var elems = document.querySelectorAll("select");
     M.FormSelect.init(elems);
+    this.getEmpList();
   },
   methods: {
     // clone
@@ -116,8 +127,6 @@ export default {
         id: `${++this.counter}`,
       });
     },
-
-
     addgroup() {
       const formData = new FormData();
       formData.append("title", this.group.title);
@@ -125,12 +134,9 @@ export default {
       formData.append("des", this.group.des);
       
       for (let index = 0; index < this.inputs.length; index++) {
-        formData.append('users[]', this.inputs[index].name.name);
+        formData.append('users[]', this.inputs[index].name.uqid);
         formData.append('role[]', this.inputs[index].role.name);
-      }
-      
-      
-      
+      }  
       this.$axios
         .post(this.$apiUrl + "org/group-add", formData, {
           headers: { Authorization: this.$token }
@@ -146,7 +152,29 @@ export default {
           var toastHTML = "<ul>" + err.response.data.msg + "</ul>";
           M.toast({ html: toastHTML, classes: "red" });
         });
+    },
+
+    // get users list
+    getEmpList(){
+        this.$axios.get(this.$apiUrl+'org/group-employees',
+            {headers: { Authorization: this.$token } }
+        )
+        .then(res => {
+            this.users = res.data.data;
+            console.log(res);
+            
+        })
+        .catch(err =>{
+            console.log(err);
+            this.errormsg = err.response.data.msg;
+            var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
+            M.toast({html: toastHTML, classes: 'red'});
+        })
+    },
+    fullName({fname, lname}){
+      return `${fname} ${ lname}`;
     }
+
   }
 };
 </script>

@@ -41,25 +41,32 @@ props: ['snav'],
   data(){
     return{
       msg: '',
+      rto : '',
     }
   },
 
   methods:{
     deleteItem(url){
       var id =  this.$route.params.id;
+        this.snav[0].links.forEach(element => {
+          if(element.title == 'list'){
+            this.rto = element.link
+          }
+        });
+       
           this.$axios.delete(this.$apiUrl+url+id,
                 {headers: { Authorization: this.$token } }
             )
             .then(res => {
                 // this.msg = err.response.data.msg;
-                var toastHTML = 'Department deleted succesfully';
+                var toastHTML = 'Successfully deleted';
                 M.toast({html: toastHTML, classes: 'green'});
-                this.$router.push({ path:'/organization/department'});  
+                this.$router.push({ path:this.rto});  
             })
             .catch(err =>{
                 this.msg = err.response.data.msg;
                 var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
-                M.toast({html: toastHTML, classes: 'red'});
+                var m = M.toast({html: toastHTML, classes: 'red'});
                 
                 
             })

@@ -96,7 +96,7 @@
                     <div class="bottom-button">
                         <div class="col s12  ">
                             <button class="waves-effect waves-light btn-small mr10 hoverable"  ref="submit">update</button>
-                            <button class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</button>
+                            <router-link to="/organization/department" class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</router-link>
                         </div>
                     </div>
                 </form>
@@ -134,7 +134,7 @@ export default {
             formData.append('mail', this.department.dep_mail);
             formData.append('leader', this.department.dep_leader.uqid);
             formData.append('parent', this.selectedDepartment.id);
-            this.$axios.post(this.$apiUrl+'org/department-update/'+this.$route.query.id,
+            this.$axios.post(this.$apiUrl+'org/department-update/'+this.$route.params.id,
                 formData,
                 {headers: { Authorization: this.$token } }
             )

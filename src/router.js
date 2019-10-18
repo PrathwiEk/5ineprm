@@ -13,13 +13,13 @@ export default new Router({
     {
       path: '/',
       name: 'register',
-      beforeEnter: guard,
+      // beforeEnter: guard,
       component: () => import('./views/auth/Register.vue')
     },
     {
       path: '/signin',
       name: 'login',
-      beforeEnter: guard,
+      // beforeEnter: guard,
       component: () => import('./views/auth/login.vue')
     },
     {

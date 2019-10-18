@@ -2,7 +2,7 @@
   <div id="dpt" >
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav ></secondnav>
+    <secondnav :snav="secnav"></secondnav>
     <div class="db-container">
     <!-- list -->
     <list></list>
@@ -24,10 +24,15 @@ export default {
             navitems: {
                 title: "Department"
             },
+            
             secnav:[
-              {icon: 'list', title: 'list', link: '/organization/department'},
-              {icon: 'add', title: 'Create', link: '/organization/department/create'},
-              {icon: 'delete', title: 'delete', method: 'delete()'},
+              {
+                links:[
+                  {icon: 'list', title: 'list', link: '/organization/department'},
+                  {icon: 'add', title: 'Create', link: '/organization/department/create'},
+                ],
+                
+              }
             ],
           
         };

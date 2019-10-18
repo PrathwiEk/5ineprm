@@ -2,8 +2,8 @@
   <div id="dpt" >
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
-      <datatable title="Departments" :columns="tableColumns1" :rows="lists" v-on:row-click="editDepartment"></datatable>
+    <secondnav :snav="secnav"></secondnav>
+      <datatable title="Group" :columns="tableColumns1" :rows="lists" v-on:row-click="editDepartment"></datatable>
   </div>
 </template>
 
@@ -20,6 +20,14 @@ export default {
       navitems: {
           title: "Group"
       },
+      secnav:[
+        {
+          links:[
+            {icon: 'list', title: 'list', link: '/organization/group'},
+            {icon: 'add', title: 'Create', link: '/organization/group/create'},
+          ],
+        }
+      ],
 
       tableColumns1: [
         { label: "Group Name", field: "title", numeric: false, html: false },

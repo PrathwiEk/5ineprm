@@ -2,8 +2,8 @@
   <div id="dpt" >
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
-      <datatable title="Departments" :columns="tableColumns1" :rows="departmentList" v-on:row-click="editDepartment"></datatable>
+    <secondnav :snav="secnav"></secondnav>
+      <datatable title="Designation" :columns="tableColumns1" :rows="departmentList" v-on:row-click="editDepartment"></datatable>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
       },
 
       tableColumns1: [
-        { label: "Department Name", field: "des_title", numeric: false, html: false },
+        { label: "Designation Name", field: "des_title", numeric: false, html: false },
         { label: "Mail Alias", field: "des_mail", numeric: false, html: false },
         { label: "Created by", field: "des_created_by", numeric: false, html: false }, 
         { label: "Created On", field: "des_created_On",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'},
@@ -30,6 +30,14 @@ export default {
         { label: "Modified At", field: "des_updated_on",  html: false , type: 'date', inputFormat: 'YYYYMMDD', outputFormat: 'MMM Do YY'}
       ],
       departmentList:[],
+      secnav:[
+        {
+          links:[
+            {icon: 'list', title: 'list', link: '/organization/designation'},
+            {icon: 'add', title: 'Create', link: '/organization/designation/create'},
+          ],
+        }
+      ],
     }
   },
 
