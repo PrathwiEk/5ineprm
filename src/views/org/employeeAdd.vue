@@ -2,7 +2,7 @@
   <div>
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
 
     <div class="depart-create db-container">
       <div class="container-wrap-1">
@@ -226,11 +226,8 @@
         <!-- ---------------------------------------------------- -->    
             <div class="bottom-button">
                 <div class="col s12">
-                  <button
-                    class="waves-effect waves-light btn-small mr10 hoverable"
-                    ref="submit"
-                  >Submit</button>
-                  <button class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</button>
+                  <button class="waves-effect waves-light btn-small mr10 hoverable" ref="submit" >Submit</button>
+                  <router-link to="/organization/employee" class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</router-link>
                 </div>
             </div>
 
@@ -256,7 +253,14 @@ export default {
         work:{department:'', designation:'', group:'', doh:'', doj:''},
         personal:{ gender:'', dob:'', address:'', phone:'', mail:'' },
         account:{bname:'', bno:'', ifsc:'', pan:'', adhaar:''},
-
+        secnav:[
+          {
+            links:[
+              {icon: 'list', title: 'list', link: '/organization/employee'},
+              {icon: 'add', title: 'Create', link: '/organization/employee/create'},
+            ],
+          }
+        ],
         navitems: { title: "Add New Employee" },
         departments:'',
         groups:[],
@@ -324,9 +328,9 @@ export default {
           headers: { Authorization: this.$token }
         })
         .then(res => {
-          this.errormsg = res.response.data.msg;
+          
           var toastHTML = "<span>Employee Successfully Added. <br>Employee login link sended to employee email id.</span>";
-          M.toast({ html: toastHTML, classes: "red" });
+          M.toast({ html: toastHTML, classes: "green" });
           this.$router.push({
             path: "/organization/employee/edit/" + res.data.data.id
           });

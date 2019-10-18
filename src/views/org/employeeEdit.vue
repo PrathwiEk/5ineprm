@@ -2,7 +2,7 @@
   <div>
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
 
     <div class="depart-create db-container">
       <div class="container-wrap-1">
@@ -257,12 +257,24 @@ export default {
         work:{department:'', designation:'', group:'', doh:'', doj:''},
         personal:{ gender:'', dob:'', address:'', phone:'', mail:'' },
         account:{bname:'', bno:'', ifsc:'', pan:'', adhaar:''},
-        navitems: { title: "Add New Employee" },
+        navitems: { title: "Edit New Employee" },
         employee:{ profile: {}, account: { } },
         departments:'',
         groups:[],
         designations:[],
         genders:[{ name: 'Male', value:'M' }, { name: 'Female', value:'F' },{ name: 'Others', value:'O' }],
+        secnav:[
+          {
+            links:[
+              {icon: 'list', title: 'list', link: '/organization/employee'},
+              {icon: 'add', title: 'Create', link: '/organization/employee/create'},
+            ],
+            method:[
+              {icon: 'delete', title: 'delete', methods: 'delete', link:'org/employee-delete/'},
+              
+            ],
+          }
+        ],
     };
   },
   mounted() {
@@ -345,7 +357,7 @@ export default {
         })
         .then(res => {
             
-            var toastHTML = '<span>'+ res.data.msg +'</span>';
+            var toastHTML = 'Succesfully added';
             M.toast({ html: toastHTML, classes: "green" });
         })
         .catch(err => {

@@ -2,7 +2,7 @@
   <div id="dpt" >
     <nvbars :navitems="navitems"></nvbars>
     <!-- second nav -->
-    <secondnav></secondnav>
+    <secondnav :snav="secnav"></secondnav>
       <datatable title="Departments" :columns="tableColumns1" :rows="list" v-on:row-click="editDepartment"></datatable>
   </div>
 </template>
@@ -20,7 +20,14 @@ export default {
       navitems: {
           title: "Designation"
       },
-
+      secnav:[
+        {
+          links:[
+            {icon: 'list', title: 'list', link: '/organization/employee'},
+            {icon: 'add', title: 'Create', link: '/organization/employee/create'},
+          ],
+        }
+      ],
       tableColumns1: [
         { label: "Reg Id", field: "id", numeric: false, html: false },
         { label: "First Name", field: "fname", numeric: false, html: false },

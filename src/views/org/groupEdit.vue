@@ -68,7 +68,7 @@
                   <div class="bottom-button">
                     <div class="col s12">
                       <button class="waves-effect waves-light btn-small mr10 hoverable" ref="submit" >Submit</button>
-                      <button class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</button>
+                      <router-link to="/organization/group" class="waves-effect waves-light red btn-small mr10 hoverable">Cancel</router-link>
                     </div>
                   </div>
             </form>
