@@ -13,18 +13,18 @@
               <div class="row mb0">
                 <div class="col s12 m12 l6">
                   <div class="row mb0">
-                    <div class="input-field cm-field col s12">
+                    <div class=" cm-field col s12">
+                      <label for="pname" class="typo__label">Project Title</label>
                       <input id="pname" type="text" required v-model="project.pname" />
-                      <label for="pname">Project Title</label>
                     </div>
 
-                    <div class="cm-field input-field col s12 m6 l6">
-                      <label for="sdate" class="typo__label">Select Start Date</label>
-                      <input type="text" placeholder="DD MM YYYY"  v-model="project.startDate" value="" class="datepicker">
+                    <div class="cm-field  col s12 m6 l6">
+                      <label for="" class="typo__label black-text">Select Start Date</label>
+                      <Datepicker v-model="project.startDate" ></Datepicker>
                     </div>
                     <div class="cm-field col s12 m6 l6">
-                      <label for="sdate" class="typo__label">Select End Date</label>
-                      <input type="text" placeholder="DD MM YYYY"  v-model="project.endDate" class="datepicker">
+                      <label for="" class="typo__label">Select End Date</label>
+                      <Datepicker v-model="project.endDate" ></Datepicker>
                       <!-- {{ project.endDate }} -->
                     </div>
                     <div class="clearfix"></div>
@@ -34,7 +34,7 @@
                       <label class="typo__label">Group</label>
                       <multiselect
                         v-model="project.pgroup"
-                        :options="group"
+                        :options="groups"
                         placeholder="Select Project Group"
                         label="name"
                         track-by="id"
@@ -45,7 +45,8 @@
                       <label class="typo__label">Owner</label>
                       <multiselect
                         v-model="project.powner"
-                        :options="ownersList"
+                        :options="users"
+                        :custom-label="fullName"
                         placeholder="Select Project Owner"
                         label="name"
                         track-by="id"
@@ -67,7 +68,8 @@
                         placeholder="Add users"
                         label="name"
                         track-by="id"
-                        :options="usersList"
+                        :options="users"
+                        :custom-label="fullName"
                         :multiple="true"
                         :taggable="true"
                         @tag="addTag"
@@ -77,7 +79,7 @@
                     <div class="clearfix"></div>
                     <div class="col m12 l12 cm-field">
                       <label>
-                        <input name="group1" class="with-gap" v-model="project.paccess" value="1" type="radio"   />
+                        <input name="group1" class="with-gap" v-model="project.paccess" value="1" checked  type="radio"   />
                         <span>Private</span>
                         <p
                           class="helper-text-radio block mb0 m0"
@@ -103,8 +105,8 @@
                     </a>
                   </div>
                 </div>
-                <div class="col s12 input-field m12 l6 cm-field">
-                  <label  class="">Description</label>
+                <div class="col s12  m12 l6 cm-field">
+                  <label   class="typo__label">Description</label>
                   <textarea v-model="project.des" name="" id=""  rows="15"></textarea>
               </div>
               </div>
@@ -119,7 +121,7 @@
 <script>
 import skkin from "../../components/dashboard/skkin.vue";
 import Multiselect from "vue-multiselect";
-
+import Datepicker from 'vuejs-datepicker';
 // editor
 
 
@@ -128,7 +130,7 @@ export default {
   components: {
     Skin: skkin,
     Multiselect: Multiselect,
-    
+    Datepicker
   },
  
   data() {
@@ -151,16 +153,15 @@ export default {
       endDate: "",
       content: '',
       ownersList:[{ id:'1', name:'shahir' }],
-      usersList:[{ id:'2', name:'Rishabh'}, {id:'3', name:'Prathwi' }],
-      group:[{ id:'1', name:'development' }, {id:'2', name:'digital marketing'}],
+      users:[],
+      groups:[],
       errormsg:'',
       
     };
   },
-mounted(){
-        // date picker
-        var elems = document.querySelectorAll('.datepicker');
-        M.Datepicker.init(elems);
+  mounted(){
+      this.getEmpList();  
+      this.getdgdlist();
     },
   methods: {
     addTag(name) {
@@ -206,6 +207,36 @@ mounted(){
             M.toast({html: toastHTML, classes: 'red'});
           }
         })
+    },
+    // fetch designation, department, group
+    getdgdlist(){
+      var self = this;
+      this.$axios.get(this.$apiUrl + "org/list-all", {
+          headers: { Authorization: this.$token }
+        })
+      .then(function (response) {
+        self.groups = response.data.data.group;
+      })
+    },
+
+    getEmpList(){
+        this.$axios.get(this.$apiUrl+'org/group-employees',
+            {headers: { Authorization: this.$token } }
+        )
+        .then(res => {
+            this.users = res.data.data;
+            console.log(res);
+            
+        })
+        .catch(err =>{
+            console.log(err);
+            this.errormsg = err.response.data.msg;
+            var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
+            M.toast({html: toastHTML, classes: 'red'});
+        })
+    },
+    fullName({fname, lname}){
+      return `${fname} ${ lname}`;
     }
 
   }
@@ -215,4 +246,6 @@ mounted(){
 <style scoped>
 
 >>>.ql-editor{min-height: 200px}
+.vdp-datepicker::after { bottom: 12px; }
+
 </style>

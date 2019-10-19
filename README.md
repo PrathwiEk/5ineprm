@@ -111,3 +111,16 @@ import DataTable from "vue-materialize-datatable";
 ### Vue modal 
 see [Model Documentation](https://github.com/euvl/vue-js-modal)
 
+
+### Veu date picker
+```
+import Datepicker from 'vuejs-datepicker';
+
+export default {
+  components: {
+    Datepicker
+  }
+}
+
+```
+see [Date Picker Documentation](https://github.com/charliekassel/vuejs-datepicker)

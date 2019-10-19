@@ -84,7 +84,9 @@
                     <div class="title">Date of Join</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="work.doj" class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="work.doj" class="no-line datepicker" /> -->
+                    <Datepicker v-model="work.doj" required></Datepicker>
+                    
                   </div>
                 </div>
             </div>
@@ -104,7 +106,8 @@
                     <div class="title">Date of hire</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="work.doh"  class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="work.doh"  class="no-line datepicker" /> -->
+                     <Datepicker v-model="work.doh" required></Datepicker>
                   </div>
                 </div>
             </div>
@@ -129,7 +132,9 @@
                     <div class="title">Date of Birth</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="personal.dob" class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="personal.dob" class="no-line datepicker" /> -->
+                    <Datepicker v-model="personal.dob" required></Datepicker>
+                    
                   </div>
                 </div>
                 <div class="row m0">
@@ -242,9 +247,11 @@
 import nvbars from "../../components/dashboard/skkin.vue";
 import secondnav from "../../components/department/secnav.vue";
 import Multiselect from 'vue-multiselect'
+import Datepicker from 'vuejs-datepicker';
+
 
 export default {
-  components: { secondnav, nvbars, Multiselect},
+  components: { secondnav, nvbars, Multiselect, Datepicker},
   data() {
     return {
         designation: { title: "", mailAlias: "", },
@@ -272,9 +279,6 @@ export default {
     var elems = document.querySelectorAll("select");
     M.FormSelect.init(elems);
 
-    var datepicker = document.querySelectorAll('.datepicker');
-    M.Datepicker.init(datepicker);
-
     this.getdgdlist();
     
   },
@@ -291,10 +295,6 @@ export default {
         self.groups = response.data.data.group;
         self.designations = response.data.data.designation;
       })
-      // .catch(function (error) {
-      //     var toastHTML = "<span>Some error will occured. <br> Please contact Support Team!!!</span>";
-      //     M.toast({ html: toastHTML, classes: "red" });
-      // })
     },
 
     adddesignation() {
@@ -307,11 +307,11 @@ export default {
       formData.append("designation", this.work.designation.id);
       formData.append("department", this.work.department.id);
       formData.append("group", this.work.group.id);
-      formData.append("doh", '03-4-2019');
-      formData.append("doj", '03-4-2019');
+      formData.append("doh", this.work.doh);
+      formData.append("doj", this.work.doj);
 
       formData.append("gender", this.personal.gender.value);
-      formData.append("dob", '03-4-2019');
+      formData.append("dob", this.personal.dob);
       formData.append("ad_phone", this.personal.phone);
       formData.append("address", this.personal.address);
       formData.append("ad_email", this.personal.mail);

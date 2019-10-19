@@ -8,6 +8,11 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                 <li>
+                    <a  href="/projects" >
+                        Projects
+                    </a>
+                </li>
+                <li>
                     <a class="dropdown-trigger" href="#!" data-target="orgdroup">
                         Organization
                     </a>

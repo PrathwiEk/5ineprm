@@ -85,7 +85,8 @@
                     <div class="title">Date of Join</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="employee.profile.doj" class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="employee.profile.doj" class="no-line datepicker" /> -->
+                    <Datepicker v-model="employee.profile.doj" required></Datepicker>
                   </div>
                 </div>
             </div>
@@ -105,7 +106,8 @@
                     <div class="title">Date of hire</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="employee.profile.doh"  class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="employee.profile.doh"  class="no-line datepicker" /> -->
+                    <Datepicker v-model="employee.profile.doh" required></Datepicker>
                   </div>
                 </div>
             </div>
@@ -130,7 +132,8 @@
                     <div class="title">Date of Birth</div>
                   </div>
                   <div class="col s12 m7">
-                    <input type="text" required v-model="employee.profile.dob" class="no-line datepicker" />
+                    <!-- <input type="text" required v-model="employee.profile.dob" class="no-line datepicker" /> -->
+                    <Datepicker v-model="employee.profile.dob" required></Datepicker>
                   </div>
                 </div>
                 <div class="row m0">
@@ -335,11 +338,11 @@ export default {
       formData.append("designation", this.employee.profile.designation.id);
       formData.append("department", this.employee.profile.department.id);
       formData.append("group", this.employee.profile.group.id);
-      formData.append("doh", '03-4-2019');
-      formData.append("doj", '03-4-2019');
+      formData.append("doh", this.employee.profile.doh);
+      formData.append("doj", this.employee.profile.doj);
 
       formData.append("gender", this.employee.profile.gender.value);
-      formData.append("dob", '03-4-2019');
+      formData.append("dob", this.employee.profile.dob);
       formData.append("ad_phone", this.employee.profile.phone);
       formData.append("address", this.employee.profile.address);
       formData.append("ad_email", this.employee.profile.mail);
