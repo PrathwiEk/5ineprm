@@ -58,11 +58,18 @@ export default new Router({
       component: () => import('./views/project/Create.vue')
     },
     {
-      path: '/project-detail/:id',
+      path: '/project/:id',
       name: 'Project Detail',
       beforeEnter: guard,
       component: () => import('./views/project/Detail.vue')
     },
+      // project inside
+      {
+        path: '/project/:id/tasks',
+        name: 'Tasks',
+        beforeEnter: guard,
+        component: () => import('@/views/project/tasks/list.vue')
+      },
 
 
     // organization

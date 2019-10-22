@@ -3,7 +3,8 @@
         <div class="container-wrap-2">
             <div class="row mb0">
                 <div class="col m4 s6 l3" v-for="(project , id) in projects" :key="id">
-                    <div class="card z-depth-2 project-card">
+                    <a :href="'/project/'+project.id" >
+                        <div class="card z-depth-2 project-card">
                         <div class="card-body">
                             <div class="pc-tophead">
                                 <div class="left">
@@ -29,7 +30,7 @@
                                     <div class="col s8">
                                         <ul class="teame-list" >
                                             <li v-for="(user, id ) in project.user" :key="id">
-                                                <img v-if="user.profile_pic == ''" src="https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png" alt="" class="circle">
+                                                <img v-if="user.profile_pic == '' || user.profile_pic == null " src="https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png" alt="" class="circle">
                                                 <img v-else :src="user.profile_pic" :alt="user.email" :title="user.name" class="circle">
                                             </li>
                                             
@@ -69,6 +70,8 @@
                             </div>
                         </div>
                     </div>
+                    </a>
+                    
 
                     
                 </div>

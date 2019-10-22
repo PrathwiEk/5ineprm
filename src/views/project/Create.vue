@@ -198,7 +198,7 @@ export default {
           {headers: { Authorization: this.$token } }
         )
         .then(res => {
-          this.$router.push({ path:'/project-detail/'+res.data.id+'?prid='+res.data.id });
+          this.$router.push({ path:'/project/'+res.data.id});
         })
         .catch(error => {
           if (error.response) {

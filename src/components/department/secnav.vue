@@ -8,27 +8,36 @@
             <li></li>
           </ul>
           <ul id="nav-mobile" class="right" v-for="(nitem , index) in snav" :key="index">
-            <li v-for="(item , key) in nitem.links" :key="key" > 
-              <router-link :to="item.link"  class="waves-effect waves-green" > 
+            <!-- second links -->
+            <li v-for="(item , key) in nitem.seclinks" :key="key" > 
+              <router-link :to="'/project/'+id+item.link"  class="waves-effect waves-green" > 
                 <i class="material-icons">{{item.icon}}</i> 
                 <span>{{item.title}}</span> 
               </router-link> 
             </li>
-
+            <li class="black-text nav seprate"></li>
+            <!-- links -->
+            <li v-for="(item , key) in nitem.links" :key="'link'+key" > 
+              <router-link :to="item.link"  class="waves-effect waves-green" v-if="!item.slider"> 
+                <i class="material-icons">{{item.icon}}</i> 
+                <span>{{item.title}}</span> 
+              </router-link> 
+              
+              <a v-else data-target="slide-out" class="sidenav-trigger" >
+                 <i class="material-icons">{{item.icon}}</i> 
+                <span>{{item.title}}</span> 
+              </a>
+            </li>
+            
+            <!-- methosd -->
             <li v-for="(items , keys) in nitem.method" :key="items.title + keys" > 
               <a  @click="deleteItem(items.link)" class="waves-effect waves-green" v-if="items.methods == 'delete'"> 
                 <i class="material-icons">{{items.icon}}</i> 
                 <span>{{items.title}}</span> 
               </a> 
             </li>
-
-            <!-- <li>
-              <a class="dropdown-trigger" href="#" data-target="dropdown1">
-                <i class="material-icons">filter_list</i>
-                <span>Filter</span>
-              </a>
-            </li> -->
           </ul>
+          
         </div>
       </nav>
     </div>
@@ -42,7 +51,13 @@ props: ['snav'],
     return{
       msg: '',
       rto : '',
+      id:'',
     }
+  },
+  mounted(){
+    // get id
+    this.id = this.$route.params.id;
+     
   },
 
   methods:{
@@ -66,7 +81,7 @@ props: ['snav'],
             .catch(err =>{
                 this.msg = err.response.data.msg;
                 var toastHTML = '<ul>' + err.response.data.msg+ '</ul>';
-                var m = M.toast({html: toastHTML, classes: 'red'});
+                M.toast({html: toastHTML, classes: 'red'});
                 
                 
             })
@@ -74,3 +89,8 @@ props: ['snav'],
   }
 }
 </script>
+
+<style  scoped>
+.seprate{width: 1px; height: 30px; background: #2962ff; margin-top: 10px;}
+.sidenav-trigger{display: block;margin: 0px}
+</style>

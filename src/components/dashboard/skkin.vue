@@ -12,6 +12,12 @@
                         Projects
                     </a>
                 </li>
+                <!-- <li>
+                    <a  href="/projects" >
+                        Projects
+                    </a>
+                </li> -->
+                
                 <li>
                     <a class="dropdown-trigger" href="#!" data-target="orgdroup">
                         Organization

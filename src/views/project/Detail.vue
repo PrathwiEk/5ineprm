@@ -1,11 +1,11 @@
 <template>
     <div>
         <Skin :navitems="navitems"></Skin>
+        <secondnav :snav="secnav"></secondnav>
         <div class="db-container detail">
             <div class="container-wrap-1">
                 <div class="row m0">
                     <div  class="fb-title"><span >Primary Information</span></div>
-
                     <!-- row 1 -->
                     <div class="col s12 m6">
                         <div class="row m0">
@@ -68,7 +68,6 @@
                             </div>
                             <div class="col s12 m7">
                                 <input v-model="project.start_date" value="" type="text" class="no-line datepicker">
-                                {{project.start_date}}
                             </div>
                         </div>
                     </div>
@@ -122,6 +121,13 @@
                         </div>
                     </div>
 
+                    <div class="bottom-button">
+                        <div class="col s12  ">
+                            <button class="waves-effect waves-light btn-small mr10 hoverable">update</button>
+                            <a href="/projects" class="waves-effect waves-light red btn-small mr10 hoverable router-link-active">Cancel</a>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -131,13 +137,15 @@
 
 <script>
 import skkin from "../../components/dashboard/skkin.vue";
+import secondnav from "../../components/department/secnav.vue";
+
 
 export default {
-    components: { Skin: skkin},
+    components: { Skin: skkin, secondnav},
     data(){
         return{
         navitems: {
-            title: "Test Project",
+            title: "",
             lt_link: [
             {
                 path: "/projects",
@@ -146,8 +154,31 @@ export default {
             }
             ]
         },
-
         project:{},
+        secnav:[
+          {
+            links:[
+              {icon: 'list', title: 'list', link: '/projects'},
+              {icon: 'add', title: 'Create', link: '/project-create'},
+            ],
+            seclinks:[
+                {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
+                {icon: 'event_available', title: 'Tasks', link: '/tasks'},
+                {icon: 'list_alt', title: 'Documents', link: '/projects'},
+                {icon: 'account_tree', title: 'Milstones', link: '/projects'},
+                {icon: 'report_problem', title: 'Issues', link: '/projects'},
+                {icon: 'supervisor_account', title: 'Users', link: '/projects'},
+                {icon: 'blur_on', title: 'Credantials', link: '/projects'},
+            ],
+            method:[
+              {icon: 'delete', title: 'delete', methods: 'delete', link:''},
+              
+            ],
+            
+          }
+        ],
+
+
         }
     },
 
@@ -157,18 +188,18 @@ export default {
         // date picker
         var elems = document.querySelectorAll('.datepicker');
         M.Datepicker.init(elems);
+        
     },
 
     methods:{
         getDetail(){
-            var ts =new URL(window.location);
-            var pid = ts.searchParams.get('prid');
-            this.$axios.get(this.$apiUrl+'projects-detail/'+pid,
+            var id =  this.$route.params.id;
+            this.$axios.get(this.$apiUrl+'projects-detail/'+id,
                 {headers: { Authorization: this.$token } }
                 )
                 .then(res => {
                     this.project = res.data.data['0']
-                    console.log(res.data.data);
+                   this.navitems.title = this.project.title
                     
                 })
                 .catch(error => {
@@ -197,4 +228,18 @@ export default {
 .userbox  .u-detail .ud-pos{color: #2962ff}
 .lh95{ line-height: 95px;}
 .db-container{background-color: white}
+.detail .bottom-button {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background: #f9f9f9;
+    min-height: 60px;
+    line-height: 60px;
+    left: 0px;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-box-shadow: 1px 0px 8px -5px;
+    box-shadow: 1px 0px 8px -5px;
+}
 </style>

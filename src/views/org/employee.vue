@@ -32,7 +32,7 @@ export default {
         { label: "Reg Id", field: "id", numeric: false, html: false },
         { label: "First Name", field: "fname", numeric: false, html: false },
         { label: "Last Name", field: "lname", numeric: false, html: false },
-        { label: "Email", field: "email", numeric: false, html: false }, 
+        { label: "Email", field: "mail", numeric: false, html: false }, 
         { label: "Phone", field: "phone",  html: false },
         { label: "Department", field: "profile.department", numeric: false, html: false }, 
         { label: "Designation", field: "profile.designation",  html: false },

@@ -35,3 +35,5 @@ body, html{ background: #f3f3f3; }
 .line-slect .multiselect__tags { min-height: 40px; display: block; padding: 8px 40px 0 8px; border-radius: 0; border: none; background: transparent; font-size: 14px; border-bottom: 1px solid #9e9e9e; margin-top: 8px; }
 .toast ul{padding: 0px !important; margin: 0px !important;}
 .vdp-datepicker:after{ content: "date_range"; position: absolute; font-family: 'Material Icons'; right: 0; font-size: 22px; bottom: 5px;}
+.btn, .btn-small, button{text-transform: capitalize !important;}
+.vdp-datepicker input{color: #333 !important}

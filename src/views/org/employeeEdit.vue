@@ -249,9 +249,10 @@
 import nvbars from "../../components/dashboard/skkin.vue";
 import secondnav from "../../components/department/secnav.vue";
 import Multiselect from 'vue-multiselect'
+import Datepicker from 'vuejs-datepicker';
 
 export default {
-  components: { secondnav, nvbars, Multiselect},
+  components: { secondnav, nvbars, Multiselect, Datepicker},
   data() {
     return {
         designation: { title: "", mailAlias: "", },
@@ -261,7 +262,7 @@ export default {
         personal:{ gender:'', dob:'', address:'', phone:'', mail:'' },
         account:{bname:'', bno:'', ifsc:'', pan:'', adhaar:''},
         navitems: { title: "Edit New Employee" },
-        employee:{ profile: {}, account: { } },
+        employee:{ id :'', uqid :'', fname :'', lname :'', mail :'', phone :'', type :'', profile_pic :'', created_on:'', created_by :'', profile:{ id:'', department:  '', designation:'', group: '', doh:  '', doj: '', gender:  '', dob:  '', address:'', phone:'', mail:'', created_on:'', created_by: '', update_on:'', updated_by: '', }, account:{ id:'', bname:'', bno: '', ifsc:'', pan:  '', adhaar:'', created_on:'', created_by:'', updated_on:'', updated_by:'', } },
         departments:'',
         groups:[],
         designations:[],
