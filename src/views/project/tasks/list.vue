@@ -29,9 +29,13 @@
                                     {{row.title}}
                                 </span>
                                 <transition name="fade">
-                                    <table class="highlight lesspadding" v-if="opened.includes(i)">
+                                    <table class="highlight lesspadding subtask" v-if="opened.includes(i)">
                                         <tr v-for="(child , k) in row.child" :key="k">
-                                            <td width="300px">{{child.title }}</td>
+                                            <td width="300px">
+                                                <a @click="deleteTask(child.id)" class="task-delete-pre"> <i class="material-icons">delete</i> </a>
+                                                <a href="" class="task-edit-pre"> <i class="material-icons">edit</i> </a>
+                                                {{child.title }}
+                                            </td>
                                             <td width="250">{{child.created_by }}</td>
                                             <td width="250">{{child.assign_to }}</td>
                                             <td width="200px">{{child.status }}</td>
@@ -328,6 +332,25 @@ export default {
             });
         },
 
+        // delete task
+        deleteTask(id){
+            if(confirm("Are you sure to delete this task?")){
+                
+                this.$axios.delete(this.$apiUrl + "task/delete/"+ id,  {
+                    headers: { Authorization: this.$token }
+                })
+                .then(res => { 
+                     M.toast({ html: 'Record was successfully deleted', classes: "green" });
+                     this.getTaskList();
+                })
+                .catch(err => { 
+                    alert('not ok');
+                });
+            }else{
+                return false;
+            }
+        }
+
     }
 };
 </script>
@@ -410,6 +433,51 @@ tr
     background: #333
     color: #fff
 
+.subtask
+    tr
+        position: relative
+        &:before
+            position: absolute
+            content: ""
+            width: 100px
+            left: -63px
+            height: 100%
+
+        &:hover .task-delete-pre
+            opacity:1
+            display: block
+
+        &:hover .task-edit-pre
+            opacity:1
+            display: block
+
+        .task-delete-pre
+            position: absolute
+            left: -25px
+            color: #d90000
+            opacity:0
+            display: none
+            cursor: pointer
+            &:hover
+                transform: scale(1.2)
+                color: red
+            i
+                font-size:16px
+        
+        .task-edit-pre
+            position: absolute
+            left: -50px
+            color: #0d47a1
+            opacity:0
+            display: none
+            cursor: pointer
+            &:hover
+                transform: scale(1.2)
+                color: #448aff
+            i
+                font-size:16px
+
+        
 
 </style>
 
