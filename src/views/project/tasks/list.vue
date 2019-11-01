@@ -6,53 +6,54 @@
       <div class="">
         <div class="row mb0">
           <div class="col s12">
-              <table>
-                  <thead>
-                    <th width="25px"> <i class="material-icons tiny">settings_applications</i> </th>
-                    <th width="25px"><i class="material-icons tiny border">keyboard_arrow_down</i></th>
-                    <th width="300px">Tasks List</th>
-                    <th width="250">Owner</th>
-                    <th width="250">Assign To</th>
-                    <th width="200px">Status</th>
-                    <th width="120px">Start Date</th>
-                    <th width="120px">Due Date</th>
-                    <th width="100px">Duration</th>
-                    <th width="120px">Priority</th>
-                    <th width="120px">Completed On</th>
-                  </thead>
-                  <tbody class="">
-                        <tr v-for="(row , i) in tasklists" :key="i">
-                            <td class="v-top"><a href="#!" class="hover black-text"><i class="material-icons tiny">settings_applications</i></a></td>
-                            <td class="v-top" @click="toggle(i)"><a href="#!" class="hover black-text"><i class="material-icons tiny border" >keyboard_arrow_down</i></a></td>
-                            <td colspan="9">
-                                <span class="tasklist-td">
-                                    {{row.title}}
-                                </span>
-                                <transition name="fade">
-                                    <table class="highlight lesspadding subtask" v-if="opened.includes(i)">
-                                        <tr v-for="(child , k) in row.child" :key="k">
-                                            <td width="300px">
+              <div class="scoll-table">
+                    <table>
+                    <thead>
+                        <th width="25px"> <i class="material-icons tiny">settings_applications</i> </th>
+                        <th width="25px"><i class="material-icons tiny border">keyboard_arrow_down</i></th>
+                        <th width="400px">Tasks List</th>
+                        <th width="250">Owner</th>
+                        <th width="250">Assign To</th>
+                        <th width="120px">Status</th>
+                        <th width="120px">Start Date</th>
+                        <th width="120px">Due Date</th>
+                        <th width="100px">Duration</th>
+                        <th width="120px">Priority</th>
+                        <th width="120px">Completed On</th>
+                    </thead>
+                    <tbody class="">
+                            <tr v-for="(row , i) in tasklists" :key="i">
+                                <td class="v-top"><a href="#!" class="hover black-text"><i class="material-icons tiny">settings_applications</i></a></td>
+                                <td class="v-top" @click="toggle(i)"><a href="#!" class="hover black-text"><i class="material-icons tiny border" >keyboard_arrow_down</i></a></td>
+                                <td colspan="9" class="pb0">
+                                    <span class="tasklist-td">
+                                        {{row.title}}
+                                    </span>
+                                    <transition name="fade">
+                                        <table class="highlight lesspadding subtask" v-if="opened.includes(i)">
+                                            <tr v-for="(child , k) in row.child" :key="k" >
                                                 <a @click="deleteTask(child.id)" class="task-delete-pre"> <i class="material-icons">delete</i> </a>
                                                 <a href="" class="task-edit-pre"> <i class="material-icons">edit</i> </a>
-                                                {{child.title }}
-                                            </td>
-                                            <td width="250">{{child.created_by }}</td>
-                                            <td width="250">{{child.assign_to }}</td>
-                                            <td width="200px">{{child.status }}</td>
-                                            <td width="120px">{{child.sdate }}</td>
-                                            <td width="120px">{{child.edate }}</td>
-                                            <td width="100px"></td>
-                                            <td width="120px">{{child.priority }}</td>
-                                            <td width="120px">{{child.updated_on }}</td>
-                                        </tr>
-                                        
-                                    </table>
-                                </transition>
-                            </td>
-                        </tr>
-                         
-                  </tbody>
-              </table>
+                                                <td width="400px" @click="openDetail(i)"> {{child.title }} </td>
+                                                <td width="250"   @click="openDetail(i)">{{child.created_by }}</td>
+                                                <td width="250"   @click="openDetail(i)">{{child.assign_to }}</td>
+                                                <td width="120px" @click="openDetail(i)">{{child.status }}</td>
+                                                <td width="120px" @click="openDetail(i)">{{child.sdate }}</td>
+                                                <td width="120px" @click="openDetail(i)">{{child.edate }}</td>
+                                                <td width="100px" @click="openDetail(i)"></td>
+                                                <td width="120px" @click="openDetail(i)">{{child.priority }}</td>
+                                                <td width="120px" @click="openDetail(i)">{{child.updated_on }}</td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </transition>
+                                </td>
+                            </tr>
+                            
+                    </tbody>
+                </table>
+              </div>
+              
           </div>
            
         </div>
@@ -62,8 +63,7 @@
 
 
 
-    <!-- add task or task list -->
-
+<!-- add task or task list -->
     <div id="slide-out" class="sidenav addslide">
             
         <ul class="tabs row">
@@ -143,7 +143,57 @@
 
         
     </div>
+<!-- Close slide form  -->
 
+<!-- detail popup open -->
+    <div id="detail-modal" class="modal large-modal">
+        <div class="modal-content">
+            <div class="row m">
+                <h5 class="col s12">{{ tasklists[tid].child[0].title }}</h5>
+
+                <div class="col s12 m2"><p>Parent task</p></div>
+                <div class="col s12 m10"><p> {{ tasklists[tid].title }}</p></div>
+
+                <div class="col s12 m2"><p>Milestone</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].milestone }}</p></div>
+
+                <div class="col s12 m2"><p>Owner</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].created_by }}</p></div>
+
+                <div class="col s12 m2"><p>Assign To</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].assign_to }}</p></div>
+
+                <div class="col s12 m2"><p>Start Date</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].sdate }}</p></div>
+
+                <div class="col s12 m2"><p>End Date</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].edate }}</p></div>
+
+                <div class="col s12 m2"><p>Duration</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].sdate - tasklists[tid].child[0].edate }}</p></div>
+
+                <div class="col s12 m2"><p>Reaming  Days</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].pending }}</p></div>
+                
+
+                <div class="col s12 m2"><p>Priority</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].priority }}</p></div>
+
+               
+
+                
+                <div class="col s12 m12">
+                    <h6 class="black-text">Description</h6>
+                    <div v-html="tasklists[tid].child[0].des"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+<!-- End detail popup  -->
 
   </div>
 </template>
@@ -169,7 +219,7 @@ export default {
     Datepicker,
     mainnav,
     snav,
-    quillEditor
+    quillEditor,
   },
  
   data() {
@@ -218,10 +268,7 @@ export default {
             {id: '2' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
         ],
         opened: [],
-
-        
-
-      
+        tid : 0,      
     };
   },
     mounted(){
@@ -318,11 +365,12 @@ export default {
                 M.toast({ html: 'Task added', classes: "green" });
                 this.tasklist.id  = '';
                 this.employee.uqid = '';
-                this.prioritySelect.title = '';
+                // this.prioritySelect.title = '';
                 this.tasks = '';
                 this.content = '';
                 this.startdate = '';
                 this.enddate = '';
+                this.getTaskList();
             })
             .catch(err => {
                 console.log(err);
@@ -349,6 +397,13 @@ export default {
             }else{
                 return false;
             }
+        },
+
+        // task detail
+        openDetail(id){
+            var elems = document.querySelectorAll('#detail-modal');
+            var instances = M.Modal.init(elems);
+            instances[0].open();
         }
 
     }
@@ -434,14 +489,16 @@ tr
     color: #fff
 
 .subtask
+    background: #f9f9f9
     tr
         position: relative
         &:before
             position: absolute
             content: ""
-            width: 100px
+            width: 63px
             left: -63px
             height: 100%
+            background: #f9f9f9
 
         &:hover .task-delete-pre
             opacity:1
@@ -458,6 +515,7 @@ tr
             opacity:0
             display: none
             cursor: pointer
+            line-height: 40.5px
             &:hover
                 transform: scale(1.2)
                 color: red
@@ -471,13 +529,49 @@ tr
             opacity:0
             display: none
             cursor: pointer
+            line-height: 40.5px
             &:hover
                 transform: scale(1.2)
                 color: #448aff
             i
                 font-size:16px
 
-        
+.scoll-table
+    overflow-x: auto
+    scrollbar-width: thin        
 
+table
+    width: auto !important
+
+.pb0
+    padding-bottom: 0px
+
+.large-modal
+    width: 90vw
+    top: 5vh !important
+    height: 90vh !important
+    max-height: 100%
+
+    .modal-footer
+        position: absolute
+        bottom: 0
+
+    .modal-content
+        position: absolute
+        width: 100%
+        height: calc(100% - 56px )
+        overflow-y: auto
+        scrollbar-width: thin
+
+        p
+            margin: 0 0 10px 0
+        .col.m2 > p
+            font-weight: 600
+            position: relative
+
+            &:after
+                content: ":"
+                position: absolute
+                right: -5px
 </style>
 

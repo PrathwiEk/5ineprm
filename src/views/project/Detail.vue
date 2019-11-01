@@ -227,7 +227,7 @@ export default {
 .userbox  .u-detail .ud-name{font-size: 17px}
 .userbox  .u-detail .ud-pos{color: #2962ff}
 .lh95{ line-height: 95px;}
-.db-container{background-color: white}
+.db-container{background-color: white; height: calc(100vh - 165px);}
 .detail .bottom-button {
     position: fixed;
     width: 100%;
@@ -239,7 +239,6 @@ export default {
     white-space: nowrap;
     overflow-x: auto;
     scrollbar-width: thin;
-    -webkit-box-shadow: 1px 0px 8px -5px;
-    box-shadow: 1px 0px 8px -5px;
+    border-top: 1px solid #e3e3e3;
 }
 </style>

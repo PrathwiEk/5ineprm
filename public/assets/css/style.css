@@ -1,6 +1,6 @@
 .multiselect__input { display: block; opacity: 1;margin: 0 !important;  padding: 0 !important; height: auto !important;  } .multiselect__input:focus{ border: transparent !important; box-shadow: none !important; margin-bottom: 15px; } .multiselect__input:focus::-webkit-input-placeholder { font-size: 14px; } .multiselect__input:focus::-moz-placeholder { font-size: 14px; } .multiselect__input:focus:-ms-input-placeholder { font-size: 14px; } .multiselect__input:focus::placeholder { font-size: 14px; } .multiselect__placeholder { margin-bottom: 5px; }
 body, html{ background: #f3f3f3; }
-.brand {background-color: #2962ff !important}
+.brand {background-color: #3f51b5  !important}
 .container-wrap-1{width:90%; margin: auto; max-width: 1400px;}
 .container-wrap-2{width:96%; margin: auto; max-width: 1400px;}
 .mb0{margin-bottom:0px !important}

@@ -94,7 +94,7 @@
                       </label>
                     </div>
                   </div>
-                  <div class="cm-field col s12">
+                  <div class="bottom-button">
                     <button class="btn waves-effect waves-light mr10" type="submit" name="action">
                       Add
                       <i class="material-icons right">add</i>
@@ -247,5 +247,18 @@ export default {
 
 >>>.ql-editor{min-height: 200px}
 .vdp-datepicker::after { bottom: 12px; }
-
+.bottom-button {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background: #f9f9f9;
+    min-height: 60px;
+    line-height: 60px;
+    left: 0px;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    border-top: 1px solid #e3e3e3;
+    padding-left: 20px;
+}
 </style>
