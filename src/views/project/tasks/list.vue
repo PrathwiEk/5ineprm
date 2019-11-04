@@ -5,6 +5,7 @@
     <div class="db-container">
       <div class="">
         <div class="row mb0">
+           
           <div class="col s12">
               <div class="scoll-table">
                     <table>
@@ -21,35 +22,42 @@
                         <th width="120px">Priority</th>
                         <th width="120px">Completed On</th>
                     </thead>
-                    <tbody class="">
-                            <tr v-for="(row , i) in tasklists" :key="i">
-                                <td class="v-top"><a href="#!" class="hover black-text"><i class="material-icons tiny">menu</i></a></td>
+                    <tbody class="" >
+                            <tr v-for="(row , i) in tasklists" :key="i" class="task-list-row">
+                                <td class="v-top ">
+                                      <a href="#!" class="hover black-text sidenav-trigger t-btn" data-target="slide-out" @click="editTaskList(i)"><i class="material-icons tiny blue-text" >edit</i></a>
+                                      <a href="#!" class="hover black-text t-btn"><i class="material-icons tiny red-text"   @click="deleteTaskList(row.id)">delete</i></a>
+                                </td>
+                                
                                 <td class="v-top" @click="toggle(i)"><a href="#!" class="hover black-text"><i class="material-icons tiny border" >keyboard_arrow_down</i></a></td>
-                                <td colspan="9" class="pb0">
+                                <td colspan="9" class="">
                                     <span class="tasklist-td">
                                         {{row.title}}
                                     </span>
                                     <transition name="fade">
-                                        <table class="highlight lesspadding subtask" v-if="opened.includes(i)">
+                                        <table class="highlight lesspadding subtask" v-if="opened.includes(i)" width="100%">
                                             <tr v-for="(child , k) in row.child" :key="k" >
-                                                <a @click="deleteTask(child.id)" class="task-delete-pre"> <i class="material-icons">delete</i> </a>
+                                                <a @click="deleteTask(child.id)" class="task-delete-pre" > <i class="material-icons">delete</i> </a>
                                                 <a href="" class="task-edit-pre"> <i class="material-icons">edit</i> </a>
-                                                <td width="400px" @click="openDetail(i)"> {{child.title }} </td>
-                                                <td width="250"   @click="openDetail(i)">{{child.created_by }}</td>
-                                                <td width="250"   @click="openDetail(i)">{{child.assign_to }}</td>
-                                                <td width="120px" @click="openDetail(i)">{{child.status }}</td>
-                                                <td width="120px" @click="openDetail(i)">{{child.sdate }}</td>
-                                                <td width="120px" @click="openDetail(i)">{{child.edate }}</td>
-                                                <td width="100px" @click="openDetail(i)">{{child.pending }}</td>
-                                                <td width="120px" @click="openDetail(i)">{{child.priority }}</td>
-                                                <td width="120px" @click="openDetail(i)">{{child.updated_on }}</td>
+                                                <td width="400px" @click="openDetail(i, k)"> {{child.title }} </td>
+                                                <td width="250"   @click="openDetail(i, k)">{{child.created_by }}</td>
+                                                <td width="250"   @click="openDetail(i, k)">{{child.assign_to }}</td>
+                                                <td width="120px" @click="openDetail(i, k)">{{child.status }}</td>
+                                                <td width="120px" @click="openDetail(i, k)">{{child.sdate }}</td>
+                                                <td width="120px" @click="openDetail(i, k)">{{child.edate }}</td>
+                                                <td width="100px" @click="openDetail(i, k)">{{child.pending }}</td>
+                                                <td width="120px" @click="openDetail(i, k)">{{child.priority }}</td>
+                                                <td width="120px" @click="openDetail(i, k)">{{child.updated_on }}</td>
                                             </tr>
-                                            
+                                            <tr>
+                                                <td colspan="9">
+                                                    <a href="#!" class="waves-effect waves-teal btn-flat blue-text hundeline sidenav-trigger" data-target="slide-out"><i class="material-icons right">add</i> Add Task</a>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </transition>
                                 </td>
-                            </tr>
-                            
+                            </tr>                            
                     </tbody>
                 </table>
               </div>
@@ -118,12 +126,14 @@
                     <div id="addtasklist">
                         <form @submit.prevent="addTaskList()" >
                             <div class="formheight">
-                                <h6 class="col">New Task List</h6>
+                                <h6 class="col s12">Task List</h6>
                                 <div class="input-field col s12 m10">
-                                    <input id="tasklists" required type="text" v-model="ttasklist" class="validate">
-                                    <label for="tasklists"> Task List</label>
+                                    <input id="tasklists" required type="text" autofocus placeholder="" v-model="ttasklist" class="validate">
+                                    <input type="hidden" v-model="ttasklistId">
+                                    <label for="tasklists" class="active"> Task List</label>
                                 </div>
-                                <div class="input-field col s12 m10">    
+                                <div class=" col s12 m10">    
+                                     <label for="" class=""> Select Milestone</label>
                                     <Multiselect class="line-slect" placeholder="Select Milestone"   v-model="milstone" track-by="title" label="title"  :options="milstones"></Multiselect>    
                                 </div>
                             </div>
@@ -148,8 +158,8 @@
 <!-- detail popup open -->
     <div id="detail-modal" class="modal large-modal">
         <div class="modal-content">
-            <div class="row m">
-                <h5 class="col s12">{{ tasklists[tid].child[0].title }}</h5>
+            <!-- <div class="row m" v-if="tasklists[tid]">
+                <h5 class="col s12">{{ tasklists[tid].child[tcid].title }}</h5>
 
                 <div class="col s12 m2"><p>Parent task</p></div>
                 <div class="col s12 m10"><p> {{ tasklists[tid].title }}</p></div>
@@ -158,35 +168,35 @@
                 <div class="col s12 m10"><p>{{ tasklists[tid].milestone }}</p></div>
 
                 <div class="col s12 m2"><p>Owner</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].created_by }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].created_by }}</p></div>
 
                 <div class="col s12 m2"><p>Assign To</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].assign_to }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].assign_to }}</p></div>
 
                 <div class="col s12 m2"><p>Start Date</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].sdate }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].sdate }}</p></div>
 
                 <div class="col s12 m2"><p>End Date</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].edate }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].edate }}</p></div>
 
                 <div class="col s12 m2"><p>Duration</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].duration}} Days</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].duration}} Days</p></div>
 
                 <div class="col s12 m2"><p>Reaming  Days</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].pending }} Days</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].pending }} Days</p></div>
                 
 
                 <div class="col s12 m2"><p>Priority</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].priority }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].priority }}</p></div>
 
                
 
                 
                 <div class="col s12 m12">
                     <h6 class="black-text">Description</h6>
-                    <div v-html="tasklists[tid].child[0].des"></div>
+                    <div v-html="tasklists[tid].child[tcid].des"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -250,6 +260,7 @@ export default {
 
         tasklists:[],
         tasklist:'',
+        ttasklistId: '',
         employees: '',
         employee: '',
         priority:[{title: 'None'},{title: 'High'}, {title: 'Medium'}, {title:'Low'}],
@@ -260,20 +271,25 @@ export default {
         enddate:'',
 
         milstones:[{id: '1', title: 'task list 1'}, {id: '2', title: 'task list 2'},],
-        milstone:'',
+        milstone:{id: '', title: ''},
         ttasklist:'',
         
         tablerow: [
             {id: '1' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
             {id: '2' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
         ],
-        opened: [],
         tid : 0,      
+        tcid : 0,
+        opened: [],
+              
     };
   },
     mounted(){
             M.Sidenav.init(document.querySelectorAll('.addslide'), { edge: 'right' });
             M.Tabs.init(document.querySelectorAll('.tabs'));
+
+            M.Dropdown.init(document.querySelectorAll('.trigger-dropdown'), {constrainWidth:false, hover: true});
+
             this.getTaskList();
             this.getEmployee();
     },
@@ -284,14 +300,16 @@ export default {
             formData.append("title", this.ttasklist);
             formData.append("milestone", this.milstone.id);
             formData.append("project", this.$route.params.id);
+            formData.append('id', this.ttasklistId);
             this.$axios
                 .post(this.$apiUrl + "task/tasklist-add", formData, {
                 headers: { Authorization: this.$token }
             })
             .then(res => {
-                M.toast({ html: 'Task list added', classes: "green" });
+                M.toast({ html: 'Task list '+res.data.msg, classes: "green" });
                 this.ttasklist = '';
                 this.milstone = '';
+                this.getTaskList();
             })
             .catch(err => {
                 console.log(err);
@@ -301,6 +319,41 @@ export default {
             });
         },
 
+        // delete Task list
+        // delete task
+        deleteTaskList(id){
+            if(confirm("Are you sure to delete this task list?")){
+                
+                this.$axios.delete(this.$apiUrl + "task/tasklist-delete/"+ id,  {
+                    headers: { Authorization: this.$token }
+                })
+                .then(res => { 
+                     M.toast({ html: 'Record was successfully deleted', classes: "green" });
+                     this.getTaskList();
+                })
+                .catch(err => { 
+                     M.toast({ html: 'Server error occored. Plese try again', classes: "red" });
+                });
+            }else{
+                return false;
+            }
+        },
+
+        // edit task list
+        editTaskList(id){
+            var self = this;
+            self.ttasklist = self.tasklists[id].title;
+            self.milstone.id  = self.tasklists[id].milestone;
+            self.ttasklistId = self.tasklists[id].id;
+            var tTab = M.Tabs.init(document.querySelectorAll('.tabs'));
+            tTab[0].select('addtasklist');
+            self.milstones.filter(function (mil) { 
+                if(mil.id == self.tasklists[id].milestone) {
+                    self.milstone.title  = mil.title;
+                }
+            });
+            
+        },
         // close slide menu
         closeSlide(){
             var instance = M.Sidenav.init(document.querySelectorAll('.addslide'), { edge: 'right' });
@@ -316,7 +369,7 @@ export default {
                 this.opened.push(id)
             }
         },
-
+/******************  tasks *********************/
         // get task list
         getTaskList(){
             this.$axios.get(this.$apiUrl + 'task/get-tasklist/' + this.$route.params.id ,{
@@ -365,7 +418,6 @@ export default {
                 M.toast({ html: 'Task added', classes: "green" });
                 this.tasklist.id  = '';
                 this.employee.uqid = '';
-                // this.prioritySelect.title = '';
                 this.tasks = '';
                 this.content = '';
                 this.startdate = '';
@@ -400,12 +452,15 @@ export default {
         },
 
         // task detail
-        openDetail(id){
+        openDetail(id, kid){
             this.tid = id;
+            this.tcid = kid;
             var elems = document.querySelectorAll('#detail-modal');
             var instances = M.Modal.init(elems);
             instances[0].open();
-        }
+        },
+
+        
 
     }
 };
@@ -458,9 +513,11 @@ table
         border-bottom: transparent
 
 .lesspadding
-    td
-        padding: 10px 5px
-        font-size:13px
+    tr
+        cursor: pointer
+        td
+            padding: 10px 5px
+            font-size:13px
 tr 
     border-bottom: 1px solid rgba(0, 0, 0, 0.05)
 
@@ -478,6 +535,7 @@ tr
   opacity: 0
 
 .lesspadding 
+    margin-bottom: -15px
     margin-top: 15px
 
 .db-container
@@ -574,5 +632,59 @@ table
                 content: ":"
                 position: absolute
                 right: -5px
+.dropbox
+    position: relative
+
+    &:hover .dropdown-content1
+        transform: scaleY(1)
+
+
+
+
+.dropdown-content1
+    background: #fff
+    position: absolute
+    z-index: 999
+    box-shadow: 0px 2px 5px -2px
+    min-width: 150px
+    top: 23px
+    transition: 0.3s
+    transform: scaleY(0)
+
+     
+    li
+        min-height: 29px
+
+        a
+            font-size: 14px
+            color: #333
+            display: block
+            line-height: 11px
+            padding: 9px 10px
+
+            i
+                font-size: 17px
+            
+            &:hover 
+                background:#f2f2f2
+.task-list-row
+    &:hover  .t-btn
+        visibility: visible
+    .t-btn
+        visibility: hidden
+        i
+            font-size: 16px
+        &:hover i 
+            transform: scale(1.2)
+    
+table
+    min-width : 100%
+
+.hundeline
+    text-transform: capitalize
+    text-decoration: underline
+    &:hover 
+        background: #f1f1f1
+
 </style>
 
