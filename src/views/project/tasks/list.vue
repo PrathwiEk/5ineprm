@@ -23,7 +23,7 @@
                     </thead>
                     <tbody class="">
                             <tr v-for="(row , i) in tasklists" :key="i">
-                                <td class="v-top"><a href="#!" class="hover black-text"><i class="material-icons tiny">settings_applications</i></a></td>
+                                <td class="v-top"><a href="#!" class="hover black-text"><i class="material-icons tiny">menu</i></a></td>
                                 <td class="v-top" @click="toggle(i)"><a href="#!" class="hover black-text"><i class="material-icons tiny border" >keyboard_arrow_down</i></a></td>
                                 <td colspan="9" class="pb0">
                                     <span class="tasklist-td">
@@ -40,7 +40,7 @@
                                                 <td width="120px" @click="openDetail(i)">{{child.status }}</td>
                                                 <td width="120px" @click="openDetail(i)">{{child.sdate }}</td>
                                                 <td width="120px" @click="openDetail(i)">{{child.edate }}</td>
-                                                <td width="100px" @click="openDetail(i)"></td>
+                                                <td width="100px" @click="openDetail(i)">{{child.pending }}</td>
                                                 <td width="120px" @click="openDetail(i)">{{child.priority }}</td>
                                                 <td width="120px" @click="openDetail(i)">{{child.updated_on }}</td>
                                             </tr>
@@ -170,10 +170,10 @@
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[0].edate }}</p></div>
 
                 <div class="col s12 m2"><p>Duration</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].sdate - tasklists[tid].child[0].edate }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].duration}} Days</p></div>
 
                 <div class="col s12 m2"><p>Reaming  Days</p></div>
-                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].pending }}</p></div>
+                <div class="col s12 m10"><p>{{ tasklists[tid].child[0].pending }} Days</p></div>
                 
 
                 <div class="col s12 m2"><p>Priority</p></div>
@@ -401,6 +401,7 @@ export default {
 
         // task detail
         openDetail(id){
+            this.tid = id;
             var elems = document.querySelectorAll('#detail-modal');
             var instances = M.Modal.init(elems);
             instances[0].open();
