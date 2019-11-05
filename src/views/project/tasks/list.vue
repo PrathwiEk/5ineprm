@@ -38,7 +38,7 @@
                                         <table class="highlight lesspadding subtask" v-if="opened.includes(i)" width="100%">
                                             <tr v-for="(child , k) in row.child" :key="k" >
                                                 <a @click="deleteTask(child.id)" class="task-delete-pre" > <i class="material-icons">delete</i> </a>
-                                                <a href="" class="task-edit-pre"> <i class="material-icons">edit</i> </a>
+                                                <a  class="task-edit-pre sidenav-trigger" @click="editTask(i, k)" data-target="slide-out"> <i class="material-icons">edit</i> </a>
                                                 <td width="400px" @click="openDetail(i, k)"> {{child.title }} </td>
                                                 <td width="250"   @click="openDetail(i, k)">{{child.created_by }}</td>
                                                 <td width="250"   @click="openDetail(i, k)">{{child.assign_to }}</td>
@@ -51,7 +51,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="9">
-                                                    <a href="#!" class="waves-effect waves-teal btn-flat blue-text hundeline sidenav-trigger" data-target="slide-out"><i class="material-icons right">add</i> Add Task</a>
+                                                    <a href="#!" class="waves-effect waves-teal btn-flat blue-text hundeline sidenav-trigger" @click="addTotasklist(i)" data-target="slide-out"><i class="material-icons right">add</i> Add Task</a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -89,6 +89,7 @@
                                 <h6 class="col clearfix">New Task</h6><div class="clearfix"></div>
                                 <div class="input-field col s12">
                                     <input id="tasks" required type="text" v-model="tasks" placeholder="Tasks" class="validate">
+                                    <input type="hidden" v-model="taskId">
                                 </div>
 
                                 <div class=" col s12 input-field">  
@@ -117,8 +118,8 @@
                                 </div>
                             </div>
                             <div class="footer-form-btn">
-                                <button class="waves-effect waves-light btn-small indigo accent-3 mr-10">Add</button>
-                                <a class="waves-effect waves-light btn-small red darken-3"  @click="closeSlide">Cancel</a>
+                                <button class="waves-effect waves-light btn-small indigo accent-3 mr-10">Submit</button>
+                                <a class="waves-effect waves-light btn-small red darken-3 sidenav-close"  >Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -138,8 +139,8 @@
                                 </div>
                             </div>
                             <div class="footer-form-btn">
-                                <button class="waves-effect waves-light btn-small indigo accent-3 mr-10">Add</button>
-                                <a class="waves-effect waves-light btn-small red darken-3" @click="closeSlide">Cancel</a>
+                                <button class="waves-effect waves-light btn-small indigo accent-3 mr-10">Submit</button>
+                                <a class="waves-effect waves-light btn-small red darken-3 sidenav-close" >Cancel</a>
                             </div>
                             
                         </form>
@@ -224,76 +225,82 @@ import { quillEditor } from 'vue-quill-editor'
 
 
 export default {
-  components: {
-    Multiselect: Multiselect,
-    Datepicker,
-    mainnav,
-    snav,
-    quillEditor,
-  },
- 
-  data() {
-    return {
-        navitems: {
-            title: "Tasks",
-        },
-        secnav:[
-            {
-                links:[
-                    {icon: 'list', title: 'list', link: '/projects'},
-                    {icon: 'add', title: 'Add Tasks', link: '', slider:true, add:true},
-                ],
-                seclinks:[
-                    {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
-                    {icon: 'event_available', title: 'Tasks', link: '/tasks'},
-                    {icon: 'list_alt', title: 'Documents', link: '/projects'},
-                    {icon: 'account_tree', title: 'Milstones', link: '/projects'},
-                    {icon: 'report_problem', title: 'Issues', link: '/projects'},
-                    {icon: 'supervisor_account', title: 'Users', link: '/projects'},
-                    {icon: 'blur_on', title: 'Credantials', link: '/projects'},
-                ],
-                method:[
-                    {icon: 'delete', title: 'delete', methods: 'delete', link:''},
-                ],
-            }
-        ],
-
-        tasklists:[],
-        tasklist:'',
-        ttasklistId: '',
-        employees: '',
-        employee: '',
-        priority:[{title: 'None'},{title: 'High'}, {title: 'Medium'}, {title:'Low'}],
-        prioritySelect:'',
-        tasks: '',
-        content:'',
-        startdate:'',
-        enddate:'',
-
-        milstones:[{id: '1', title: 'task list 1'}, {id: '2', title: 'task list 2'},],
-        milstone:{id: '', title: ''},
-        ttasklist:'',
-        
-        tablerow: [
-            {id: '1' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
-            {id: '2' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
-        ],
-        tid : 0,      
-        tcid : 0,
-        opened: [],
-              
-    };
-  },
-    mounted(){
-            M.Sidenav.init(document.querySelectorAll('.addslide'), { edge: 'right' });
-            M.Tabs.init(document.querySelectorAll('.tabs'));
-
-            M.Dropdown.init(document.querySelectorAll('.trigger-dropdown'), {constrainWidth:false, hover: true});
-
-            this.getTaskList();
-            this.getEmployee();
+    components: {
+        Multiselect: Multiselect,
+        Datepicker,
+        mainnav,
+        snav,
+        quillEditor,
     },
+ 
+    data() {
+        return {
+            navitems: {
+                title: "Tasks",
+            },
+            secnav:[
+                {
+                    links:[
+                        {icon: 'list', title: 'list', link: '/projects'},
+                        {icon: 'add', title: 'Add Tasks', link: '', slider:true, add:true},
+                    ],
+                    seclinks:[
+                        {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
+                        {icon: 'event_available', title: 'Tasks', link: '/tasks'},
+                        {icon: 'list_alt', title: 'Documents', link: '/projects'},
+                        {icon: 'account_tree', title: 'Milstones', link: '/projects'},
+                        {icon: 'report_problem', title: 'Issues', link: '/projects'},
+                        {icon: 'supervisor_account', title: 'Users', link: '/projects'},
+                        {icon: 'blur_on', title: 'Credantials', link: '/projects'},
+                    ],
+                    method:[
+                        {icon: 'delete', title: 'delete', methods: 'delete', link:''},
+                    ],
+                }
+            ],
+
+            tasklists:[],
+            tasklist:'',
+            ttasklistId: '',
+            taskId : '',
+            employees: '',
+            employee: '',
+            priority:[{title: 'None'},{title: 'High'}, {title: 'Medium'}, {title:'Low'}],
+            prioritySelect:'',
+            tasks: '',
+            content:'',
+            startdate:'',
+            enddate:'',
+
+            milstones:[{id: '1', title: 'task list 1'}, {id: '2', title: 'task list 2'},],
+            milstone:{id: '', title: ''},
+            ttasklist:'',
+            
+            tablerow: [
+                {id: '1' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
+                {id: '2' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
+            ],
+            tid : 0,      
+            tcid : 0,
+            opened: [],
+                
+        };
+    },
+    mounted(){
+        var slider = M.Sidenav.init(document.querySelectorAll('.addslide'), { edge: 'right', onCloseEnd: () => {
+            this.clearform();
+        } });
+
+        M.Tabs.init(document.querySelectorAll('.tabs'));
+
+        M.Dropdown.init(document.querySelectorAll('.trigger-dropdown'), {constrainWidth:false, hover: true});
+
+        this.getTaskList();
+        this.getEmployee();
+    },
+    
     methods: {
+        
         // add task list
         addTaskList() {
             const formData = new FormData();
@@ -354,12 +361,8 @@ export default {
             });
             
         },
-        // close slide menu
-        closeSlide(){
-            var instance = M.Sidenav.init(document.querySelectorAll('.addslide'), { edge: 'right' });
-            instance.close();
-        },
-
+        
+/******************  Other functions  *********************/
         // toggle task list
         toggle(id) {
             const index = this.opened.indexOf(id);
@@ -369,6 +372,27 @@ export default {
                 this.opened.push(id)
             }
         },
+
+        // claerform 
+        clearform(){
+            this.ttasklist = '';
+            this.milstone.id = '';
+            this.ttasklistId = '';
+            this.taskId         = '';
+            this.tasks          = '';
+            this.tasklist       = '';
+            this.startdate      = '';
+            this.enddate        = '';
+            this.employee       = '';
+            this.prioritySelect = '';
+            this.content        = '';
+        },
+
+        // full name
+        fullName({name, last_name}){
+            return `${name} ${ last_name}`;
+        },
+
 /******************  tasks *********************/
         // get task list
         getTaskList(){
@@ -395,10 +419,7 @@ export default {
                 console.error(err); 
             })
         },
-        fullName({name, last_name}){
-            return `${name} ${ last_name}`;
-        },
-
+        
         //  add tasks
         addTask(event) {
             const formData = new FormData();
@@ -410,12 +431,13 @@ export default {
             formData.append("content", this.content);
             formData.append("startdate", this.startdate);
             formData.append("enddate", this.enddate);
+            formData.append("id", this.taskId);
 
             this.$axios.post(this.$apiUrl + "task/add", formData, {
                 headers: { Authorization: this.$token }
             })
             .then(res => {
-                M.toast({ html: 'Task added', classes: "green" });
+                M.toast({ html: 'Task '+res.data.msg, classes: "green" });
                 this.tasklist.id  = '';
                 this.employee.uqid = '';
                 this.tasks = '';
@@ -459,6 +481,32 @@ export default {
             var instances = M.Modal.init(elems);
             instances[0].open();
         },
+
+        // edit task
+        editTask(i, k){
+            var tTab = M.Tabs.init(document.querySelectorAll('.tabs'));
+            tTab[0].select('addtask');
+            this.taskId         = this.tasklists[i].child[k].id;
+            this.tasks          = this.tasklists[i].child[k].title;
+            this.startdate      = this.tasklists[i].child[k].sdate;
+            this.enddate        = this.tasklists[i].child[k].edate;
+            this.content        = this.tasklists[i].child[k].des;
+            this.employee       = {
+                                name: this.tasklists[i].child[k].assign_fname,
+                                last_name: this.tasklists[i].child[k].assign_lname,
+                                uqid: this.tasklists[i].child[k].assigntoid,
+            };
+            this.prioritySelect = { 
+                                title: this.tasklists[i].child[k].title 
+            };
+            this.tasklist      = this.tasklists[i];
+          
+        },
+
+        //  add to task list
+        addTotasklist(i){
+            this.tasklist      = this.tasklists[i];
+        }
 
         
 
