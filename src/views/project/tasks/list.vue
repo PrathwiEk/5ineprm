@@ -159,7 +159,7 @@
 <!-- detail popup open -->
     <div id="detail-modal" class="modal large-modal">
         <div class="modal-content">
-            <!-- <div class="row m" v-if="tasklists[tid]">
+            <div class="row m" v-if="tasklists[tid]">
                 <h5 class="col s12">{{ tasklists[tid].child[tcid].title }}</h5>
 
                 <div class="col s12 m2"><p>Parent task</p></div>
@@ -197,7 +197,7 @@
                     <h6 class="black-text">Description</h6>
                     <div v-html="tasklists[tid].child[tcid].des"></div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -248,7 +248,7 @@ export default {
                         {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
                         {icon: 'event_available', title: 'Tasks', link: '/tasks'},
                         {icon: 'list_alt', title: 'Documents', link: '/projects'},
-                        {icon: 'account_tree', title: 'Milstones', link: '/projects'},
+                        {icon: 'account_tree', title: 'Milstones', link: '/milstones'},
                         {icon: 'report_problem', title: 'Issues', link: '/projects'},
                         {icon: 'supervisor_account', title: 'Users', link: '/projects'},
                         {icon: 'blur_on', title: 'Credantials', link: '/projects'},

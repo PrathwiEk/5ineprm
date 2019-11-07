@@ -70,6 +70,12 @@ export default new Router({
         beforeEnter: guard,
         component: () => import('@/views/project/tasks/list.vue')
       },
+      {
+        path: '/project/:id/milstones',
+        name: 'Milstones',
+        beforeEnter: guard,
+        component: () => import('@/views/project/milestone/list.vue')
+      },
 
 
     // organization

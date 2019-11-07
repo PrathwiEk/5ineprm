@@ -165,7 +165,7 @@ export default {
                 {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
                 {icon: 'event_available', title: 'Tasks', link: '/tasks'},
                 {icon: 'list_alt', title: 'Documents', link: '/projects'},
-                {icon: 'account_tree', title: 'Milstones', link: '/projects'},
+                {icon: 'account_tree', title: 'Milstones', link: '/milstones'},
                 {icon: 'report_problem', title: 'Issues', link: '/projects'},
                 {icon: 'supervisor_account', title: 'Users', link: '/projects'},
                 {icon: 'blur_on', title: 'Credantials', link: '/projects'},

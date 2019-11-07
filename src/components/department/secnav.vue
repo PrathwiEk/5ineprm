@@ -5,9 +5,16 @@
       <nav class="white z-depth-0">
         <div class="nav-wrapper">
           <ul id="nav-mobile" class="left nav-item-left">
-            <li></li>
+            <li v-for="(item , key) in snav[0].tabs" :key="key" class="icon-less" > 
+              <router-link :to="'/project/'+id+item.link"  class="waves-effect waves-green"  :class="item.class"> 
+               {{item.title}} 
+              </router-link> 
+            </li>
           </ul>
           <ul id="nav-mobile" class="right" v-for="(nitem , index) in snav" :key="index">
+            <!-- tabs or no icons -->
+            
+            <li class="black-text nav seprate"></li>
             <!-- second links -->
             <li v-for="(item , key) in nitem.seclinks" :key="key" > 
               <router-link :to="'/project/'+id+item.link"  class="waves-effect waves-green" > 
@@ -93,4 +100,15 @@ props: ['snav'],
 <style  scoped>
 .seprate{width: 1px; height: 30px; background: #2962ff; margin-top: 10px;}
 .sidenav-trigger{display: block;margin: 0px}
+.icon-less a {
+    line-height: 47px !important;
+    font-size: 13px;
+    padding: 0 10px;
+    border-bottom: 2px solid transparent;
+}
+.icon-less a.active{
+  border-bottom: 2px solid #4545ff;
+}
+
+nav ul li a:not(.active).router-link-active { background-color: rgba(0, 0, 0, 0.1); }
 </style>
