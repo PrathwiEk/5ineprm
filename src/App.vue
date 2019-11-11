@@ -14,6 +14,7 @@ export default {
 //     var instances = M.FormSelect.init(elems);
 //   });
 
+if (typeof M == "undefined") {var M = {}}
 
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

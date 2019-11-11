@@ -135,7 +135,7 @@
                                 </div>
                                 <div class=" col s12 m10">    
                                      <label for="" class=""> Select Milestone</label>
-                                    <Multiselect class="line-slect" placeholder="Select Milestone"   v-model="milstone" track-by="title" label="title"  :options="milstones"></Multiselect>    
+                                    <Multiselect class="line-slect" placeholder="Select Milestone"   v-model="milstone" track-by="title" label="title"  :options="milestinesList"></Multiselect>    
                                 </div>
                             </div>
                             <div class="footer-form-btn">
@@ -157,40 +157,48 @@
 <!-- Close slide form  -->
 
 <!-- detail popup open -->
-    <div id="detail-modal" class="modal large-modal">
+    <!-- <div id="detail-modal" class="modal large-modal">
         <div class="modal-content">
             <div class="row m" v-if="tasklists[tid]">
                 <h5 class="col s12">{{ tasklists[tid].child[tcid].title }}</h5>
 
                 <div class="col s12 m2"><p>Parent task</p></div>
                 <div class="col s12 m10"><p> {{ tasklists[tid].title }}</p></div>
-
+                 <div class="clearfix" >  </div>
                 <div class="col s12 m2"><p>Milestone</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].milestone }}</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>Owner</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].created_by }}</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>Assign To</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].assign_to }}</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>Start Date</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].sdate }}</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>End Date</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].edate }}</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>Duration</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].duration}} Days</p></div>
+                 <div class="clearfix" >   </div>
 
                 <div class="col s12 m2"><p>Reaming  Days</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].pending }} Days</p></div>
+                 <div class="clearfix" >   </div>
                 
 
                 <div class="col s12 m2"><p>Priority</p></div>
                 <div class="col s12 m10"><p>{{ tasklists[tid].child[tcid].priority }}</p></div>
 
                
+                 <div class="clearfix" >   </div>
 
                 
                 <div class="col s12 m12">
@@ -202,7 +210,7 @@
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
-    </div>
+    </div> -->
 
 <!-- End detail popup  -->
 
@@ -275,6 +283,7 @@ export default {
             milstones:[{id: '1', title: 'task list 1'}, {id: '2', title: 'task list 2'},],
             milstone:{id: '', title: ''},
             ttasklist:'',
+            milestinesList: '',
             
             tablerow: [
                 {id: '1' , title:'A quick way to get started!in SEO and Marketing Activities on 24 Aug, 2019 '},
@@ -297,6 +306,7 @@ export default {
 
         this.getTaskList();
         this.getEmployee();
+        this.GetMilestones();
     },
     
     methods: {
@@ -391,6 +401,18 @@ export default {
         // full name
         fullName({name, last_name}){
             return `${name} ${ last_name}`;
+        },
+
+        GetMilestones(){
+            this.$axios.get(this.$apiUrl + 'milestone/list/' + this.$route.params.id ,{
+                headers: { Authorization: this.$token }
+            })
+            .then(res => {
+                this.milestinesList = res.data.data
+            })
+            .catch(err => {
+                console.error(err); 
+            })
         },
 
 /******************  tasks *********************/
