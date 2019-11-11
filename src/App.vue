@@ -18,6 +18,18 @@ if (typeof M == "undefined") {var M = {}}
 
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style >
+
+<style lang="sass" >
+$class-slug: mr !default
+
+@for $i from 1 through 10
+  .mr-#{$i * 5}
+      margin-right: 0px + ($i *5)
+
+@for $i from 1 through 10
+  .ml-#{$i * 5}
+      margin-left: 0px + ($i *5)
+
+
 
 </style>

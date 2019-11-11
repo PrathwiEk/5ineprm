@@ -14,8 +14,8 @@ Vue.config.productionTip = false
 
 // proto types
 // Vue.prototype.$apiUrl = 'http://localhost/project-management/';
-// Vue.prototype.$apiUrl = 'http://localhost:8080/';
-Vue.prototype.$apiUrl = 'http://5ineprojects.com/project-management/api/v1/';
+Vue.prototype.$apiUrl = 'http://localhost:8080/';
+// Vue.prototype.$apiUrl = 'http://5ineprojects.com/project-management/api/v1/';
 Vue.prototype.$axios = axios;
 Vue.prototype.$token = store.state.token;
 

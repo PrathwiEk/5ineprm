@@ -51,7 +51,8 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="9">
-                                                    <a href="#!" class="waves-effect waves-teal btn-flat blue-text hundeline sidenav-trigger" @click="addTotasklist(i)" data-target="slide-out"><i class="material-icons right">add</i> Add Task</a>
+                                                    <a href="#!" class="waves-effect waves-blue btn-small  indigo accent-3   sidenav-trigger" @click="addTotasklist(i)" data-target="slide-out"><i class="material-icons right">add</i> Add Task</a>
+                                                    <a href="#!" :class="{ disabled : row.child.length <= 0 }" class="waves-effect waves-orange yellow darken-4 btn-small   ml-10" @click="activateTasks(row.id)" ><i class="material-icons right">track_changes</i> Activate Tasks</a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -370,6 +371,25 @@ export default {
                 }
             });
             
+        },
+
+        activateTasks(id){
+            const formData = new FormData();
+            formData.append('id', id);
+            this.$axios
+                .post(this.$apiUrl + "task/tasklist-activate", formData, {
+                headers: { Authorization: this.$token }
+            })
+            .then(res => {
+                M.toast({ html: 'Task list '+res.data.msg, classes: "green" });
+                this.getTaskList();
+            })
+            .catch(err => {
+                console.log(err);
+                this.errormsg = err.response.data.msg;
+                var toastHTML = "<ul>" + err.response.data.msg + "</ul>";
+                M.toast({ html: toastHTML, classes: "red" });
+            });
         },
         
 /******************  Other functions  *********************/
