@@ -19,6 +19,7 @@
     "vue-multiselect": "^2.1.6",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.3",
+    "vue-smooth-dnd": "^0.8.1",
     "vuejs-datepicker": "^1.6.2",
     "vuex": "^3.0.1"
   },

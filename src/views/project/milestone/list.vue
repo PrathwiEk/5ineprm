@@ -119,16 +119,17 @@ export default {
                 {
                     links:[
                         {icon: 'list', title: 'list', link: '/projects'},
-                        {icon: 'add', title: 'Add Tasks', link: '', slider:true, add:true},
+                        {icon: 'add', title: 'Add Milestone', link: '', slider:true, add:true},
                     ],
                     seclinks:[
                         {icon: 'dashboard', title: 'Dashboard', link: '/projects'},
                         {icon: 'event_available', title: 'Tasks', link: '/tasks'},
-                        {icon: 'list_alt', title: 'Documents', link: '/projects'},
                         {icon: 'account_tree', title: 'Milstones', link: '/milstones'},
+                        {icon: 'amp_stories', title: 'Work Board', link: '/work-board'},
                         {icon: 'report_problem', title: 'Issues', link: '/projects'},
-                        {icon: 'supervisor_account', title: 'Users', link: '/projects'},
+                        {icon: 'list_alt', title: 'Documents', link: '/projects'},
                         {icon: 'blur_on', title: 'Credantials', link: '/projects'},
+                        {icon: 'supervisor_account', title: 'Users', link: '/projects'},
                     ],
                     method:[
                         {icon: 'delete', title: 'delete', methods: 'delete', link:''},

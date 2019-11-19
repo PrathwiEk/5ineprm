@@ -77,7 +77,12 @@ export default new Router({
         beforeEnter: guard,
         component: () => import('@/views/project/milestone/list.vue')
       },
-
+      {
+        path: '/project/:id/work-board',
+        name: 'Work-Board',
+        beforeEnter: guard,
+        component: () => import('@/views/project/tasks/work.vue')
+      },
 
     // organization
     // Department
